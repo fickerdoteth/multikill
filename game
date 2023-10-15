@@ -1,0 +1,55 @@
+import random
+
+# Player attributes
+player_health = 3
+player_damage = 1
+
+# Monsters
+monsters = [
+    {"name": "Spider", "health": 1, "damage": 1},
+    {"name": "Bat", "health": 2, "damage": 1},
+    {"name": "Zombie", "health": 3, "damage": 2},
+]
+
+# Game loop
+while player_health > 0:
+    print(f"Player Health: {player_health}")
+    print("Monsters:")
+    for i, monster in enumerate(monsters):
+        print(f"{i + 1}. {monster['name']} - Health: {monster['health']} - Damage: {monster['damage']}")
+
+    choice = input("Choose a monster to fight (1/2/3), or 'q' to quit: ")
+
+    if choice == 'q':
+        print("You quit the game.")
+        break
+
+    if not choice.isdigit() or int(choice) < 1 or int(choice) > 3:
+        print("Invalid choice. Try again.")
+        continue
+
+    selected_monster = monsters[int(choice) - 1]
+    print(f"You are fighting a {selected_monster['name']}!")
+
+    # Player attacks
+    player_attack = random.randint(1, 6)
+    print(f"You hit the {selected_monster['name']} for {player_attack} damage!")
+    selected_monster['health'] -= player_attack
+
+    # Check if the monster is defeated
+    if selected_monster['health'] <= 0:
+        print(f"You defeated the {selected_monster['name']}!")
+        monsters.remove(selected_monster)
+        continue
+
+    # Monster attacks
+    monster_attack = random.randint(1, 4)
+    print(f"The {selected_monster['name']} hits you for {monster_attack} damage!")
+    player_health -= monster_attack
+
+    # Check if the player is defeated
+    if player_health <= 0:
+        print("Game Over. You were defeated.")
+        break
+
+print("Game Over. Thanks for playing!")
