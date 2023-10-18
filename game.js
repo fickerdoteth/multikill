@@ -1,6 +1,28 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const gameContainer = document.getElementById('game-container');
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+let isFullScreen = false;
+
+// Function to toggle full screen
+function toggleFullScreen() {
+    if (!isFullScreen) {
+        gameContainer.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+    isFullScreen = !isFullScreen;
+}
+
+fullscreenBtn.addEventListener('click', toggleFullScreen);
+
+// Rest of your game code
+
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
 // Player character
 const player = {
     x: canvas.width / 2,
