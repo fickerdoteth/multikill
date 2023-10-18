@@ -31,6 +31,30 @@ function jump() {
     }
 }
 
+// Define a retry function to reset the game
+function retry() {
+    isGameOver = false;
+    retryContainer.classList.add('hidden');
+    // Reset game variables or start a new round here...
+    character.x = 50;
+    character.y = 0;
+    obstacles.length = 0; // Clear obstacles
+    score = 0;
+}
+// Retry button event
+function handleRetry() {
+    retry();
+}
+
+retryButton.addEventListener('click', handleRetry);
+
+// Listen for key presses on "Enter" and "Space" buttons
+document.addEventListener('keydown', function (e) {
+    if (e.key === ' ' || e.key === 'Enter') {
+        handleRetry();
+    }
+});
+
 // Game over function
 function gameOver() {
     isGameOver = true;
