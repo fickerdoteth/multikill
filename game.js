@@ -9,8 +9,8 @@ const player = {
     speed: 2,
 };
 
-// Create an array to hold other dots
-const dots = [];
+// Create an array to hold other dots (enemies)
+const enemies = [];
 
 // Game variables
 let isGameOver = false;
@@ -36,45 +36,39 @@ function gameLoop() {
     ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
     ctx.fill();
 
-    // Draw other dots, check for collisions
-    for (let i = 0; i < dots.length; i++) {
-        const dot = dots[i];
+    // Draw enemies (other dots) and check for collisions
+    for (let i = 0; i < enemies.length; i++) {
+        const enemy = enemies[i];
         ctx.fillStyle = '#fff';
         ctx.beginPath();
-        ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+        ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
         ctx.fill();
 
-        if (isCollision(player, dot)) {
-            if (player.radius > dot.radius) {
-                // Player eats the dot
-                dots.splice(i, 1);
-                player.radius += 1; // Player gets bigger
-            } else {
-                // Player is eaten by the dot
-                isGameOver = true;
-            }
+        if (isCollision(player, enemy)) {
+            isGameOver = true; // Game over when player touches an enemy
         }
     }
 
     // Update player position based on key input or mouse input
     // (You can add input handling for player movement here)
 
-    // Generate new dots
+    // Generate new enemies (other dots)
     if (Math.random() < 0.02) {
-        dots.push({
+        enemies.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            radius: Math.random() * 5 + 2,
+            radius: Math.random() * 10 + 5,
         });
     }
 
     requestAnimationFrame(gameLoop);
 }
 
-// Handle key/mouse input for player movement
-document.addEventListener('mousemove', (e) => {
-    player.x = e.clientX - canvas.getBoundingClientRect().left;
-    player.y = e.clientY - canvas.getBoundingClientRect().top;
+// Handle mouse input for player movement
+canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    player.x = e.clientX - rect.left;
+    player.y = e.clientY - rect.top;
 });
 
 gameLoop();
