@@ -67,11 +67,17 @@ function gameOver() {
 function gameLoop() {
     if (isGameOver) return;
 
+
+    
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw character
-    ctx.fillStyle = '#ff5733';
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.height - character.height - character.y, character.width, character.height);
+
+    // Draw character in white
+    ctx.fillStyle = '#fff';
     ctx.fillRect(character.x, canvas.height - character.height - character.y, character.width, character.height);
 
     // Draw obstacles
