@@ -6,7 +6,7 @@ const player = {
     x: canvas.width / 2,
     y: canvas.height / 2,
     size: 20,
-    speed: 10,
+    speed: 30,
 };
 
 // Blocks on the screen
