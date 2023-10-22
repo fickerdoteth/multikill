@@ -1,115 +1,68 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Player block
-const player = {
+const playerFish = {
     x: canvas.width / 2,
     y: canvas.height / 2,
-    size: 20,
-    speed: 10,
+    radius: 15,
+    color: 'blue',
+    speed: 5,
 };
 
-// Blocks on the screen
-const blocks = [];
+const smallerFishes = [];
+const numSmallerFishes = 50;
 
-// Larger enemy blocks
-const enemies = [];
-
-// Game variables
-let isGameOver = false;
-
-// Function to check collision between two blocks
-function isCollision(block1, block2) {
-    return (
-        block1.x < block2.x + block2.size &&
-        block1.x + block1.size > block2.x &&
-        block1.y < block2.y + block2.size &&
-        block1.y + block1.size > block2.y
-    );
+for (let i = 0; i < numSmallerFishes; i++) {
+    smallerFishes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: 5,
+        color: 'green',
+    });
 }
 
-// Game loop
 function gameLoop() {
-    if (isGameOver) return;
-
-    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw player block
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(player.x, player.y, player.size, player.size);
+    ctx.fillStyle = playerFish.color;
+    ctx.beginPath();
+    ctx.arc(playerFish.x, playerFish.y, playerFish.radius, 0, Math.PI * 2);
+    ctx.fill();
 
-    // Draw and check collisions with blocks
-    for (let i = 0; i < blocks.length; i++) {
-        const block = blocks[i];
-        ctx.fillStyle = '#000';
-        ctx.fillRect(block.x, block.y, block.size, block.size);
-
-        if (isCollision(player, block)) {
-            if (player.size > block.size) {
-                // Player grows by a little
-                player.size += 2;
-                blocks.splice(i, 1);
-                i--;
-            } else {
-                isGameOver = true;
-            }
+    document.addEventListener('keydown', (e) => {
+        switch (e.key) {
+            case 'ArrowUp':
+                playerFish.y -= playerFish.speed;
+                break;
+            case 'ArrowDown':
+                playerFish.y += playerFish.speed;
+                break;
+            case 'ArrowLeft':
+                playerFish.x -= playerFish.speed;
+                break;
+            case 'ArrowRight':
+                playerFish.x += playerFish.speed;
+                break;
         }
-    }
+    });
 
-    // Draw and check collisions with larger enemy blocks
-    for (let i = 0; i < enemies.length; i++) {
-        const enemy = enemies[i];
-        ctx.fillStyle = '#ff0000';
-        ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size);
+    smallerFishes.forEach((fish) => {
+        ctx.fillStyle = fish.color;
+        ctx.beginPath();
+        ctx.arc(fish.x, fish.y, fish.radius, 0, Math.PI * 2);
+        ctx.fill();
 
-        if (isCollision(player, enemy)) {
-            isGameOver = true;
+        const dx = playerFish.x - fish.x;
+        const dy = playerFish.y - fish.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < playerFish.radius + fish.radius) {
+            smallerFishes.splice(smallerFishes.indexOf(fish), 1);
+            playerFish.radius += 1;
         }
-    }
-
-    // Generate larger enemy blocks (red)
-    if (Math.random() < 0.01) {
-        const size = Math.random() * 50 + 20;
-        const side = Math.floor(Math.random() * 4); // 0 for top, 1 for right, 2 for bottom, 3 for left
-        let x, y;
-
-        if (side === 0) {
-            x = Math.random() * (canvas.width - size);
-            y = -size;
-        } else if (side === 1) {
-            x = canvas.width;
-            y = Math.random() * (canvas.height - size);
-        } else if (side === 2) {
-            x = Math.random() * (canvas.width - size);
-            y = canvas.height;
-        } else {
-            x = -size;
-            y = Math.random() * (canvas.height - size);
-        }
-
-        enemies.push({ x, y, size });
-    }
+    });
 
     requestAnimationFrame(gameLoop);
 }
-
-// Event listeners for player movement
-document.addEventListener('keydown', (e) => {
-    switch (e.key) {
-        case 'ArrowUp':
-            player.y -= player.speed;
-            break;
-        case 'ArrowDown':
-            player.y += player.speed;
-            break;
-        case 'ArrowLeft':
-            player.x -= player.speed;
-            break;
-        case 'ArrowRight':
-            player.x += player.speed;
-            break;
-    }
-});
 
 gameLoop();
