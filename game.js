@@ -102,22 +102,40 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-// Handle key input for player movement (arrow keys)
+// Event listeners for player movement
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
         case 'ArrowUp':
-            player.y -= player.speed;
+            player.movingUp = true;
             break;
         case 'ArrowDown':
-            player.y += player.speed;
+            player.movingDown = true;
             break;
         case 'ArrowLeft':
-            player.x -= player.speed;
+            player.movingLeft = true;
             break;
         case 'ArrowRight':
-            player.x += player.speed;
+            player.movingRight = true;
             break;
     }
 });
+
+document.addEventListener('keyup', (e) => {
+    switch (e.key) {
+        case 'ArrowUp':
+            player.movingUp = false;
+            break;
+        case 'ArrowDown':
+            player.movingDown = false;
+            break;
+        case 'ArrowLeft':
+            player.movingLeft = false;
+            break;
+        case 'ArrowRight':
+            player.movingRight = false;
+            break;
+    }
+});
+
 
 gameLoop();
