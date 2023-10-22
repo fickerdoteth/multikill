@@ -46,7 +46,7 @@ function movePlayer(e) {
 }
 
 function spawnFish() {
-    const size = Math.random() * (player.size - 10) + 10;
+    const size = Math.random() * (player.size - 10) + 5;  // Ensuring fish is smaller than player
     const x = Math.random() * canvas.width;
     const y = Math.random() * canvas.height;
 
@@ -71,7 +71,7 @@ function eatFish() {
         let fish = fishArray[i];
         let distance = Math.sqrt((player.x - fish.x) ** 2 + (player.y - fish.y) ** 2);
 
-        if(distance < player.size + fish.size) {
+        if(distance < player.size) {  // Corrected the condition to check if the fish is within player's size
             fishArray.splice(i, 1);
             player.size += 1;
             spawnFish();
