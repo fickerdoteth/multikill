@@ -6,11 +6,14 @@ const player = {
     x: canvas.width / 2,
     y: canvas.height / 2,
     size: 20,
-    speed: 30,
+    speed: 10,
 };
 
 // Blocks on the screen
-const blocks = [35];
+const blocks = [];
+
+// Larger enemy blocks
+const enemies = [];
 
 // Game variables
 let isGameOver = false;
@@ -25,26 +28,6 @@ function isCollision(block1, block2) {
     );
 }
 
-// Function to give blocks random movements and handle bouncing
-function moveBlocks() {
-    for (let i = 0; i < blocks.length; i++) {
-        const block = blocks[i];
-
-        // Random movement
-        block.x += (Math.random() - 0.5) * 50; // Adjust the 5 to control block movement speed
-        block.y += (Math.random() - 0.5) * 50; // Adjust the 5 to control block movement speed
-
-        // Bounce off walls
-        if (block.x < 0 || block.x + block.size > canvas.width) {
-            block.xSpeed = -block.xSpeed;
-        }
-        if (block.y < 0 || block.y + block.size > canvas.height) {
-            block.ySpeed = -block.ySpeed;
-        }
-    }
-}
-
-
 // Game loop
 function gameLoop() {
     if (isGameOver) return;
@@ -53,10 +36,10 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw player block
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#fff';
     ctx.fillRect(player.x, player.y, player.size, player.size);
 
-    // Draw and check collisions with other blocks
+    // Draw and check collisions with blocks
     for (let i = 0; i < blocks.length; i++) {
         const block = blocks[i];
         ctx.fillStyle = '#000';
@@ -64,7 +47,6 @@ function gameLoop() {
 
         if (isCollision(player, block)) {
             if (player.size > block.size) {
-             
                 // Player grows by a little
                 player.size += 2;
                 blocks.splice(i, 1);
@@ -74,7 +56,8 @@ function gameLoop() {
             }
         }
     }
- // Draw and check collisions with larger enemy blocks
+
+    // Draw and check collisions with larger enemy blocks
     for (let i = 0; i < enemies.length; i++) {
         const enemy = enemies[i];
         ctx.fillStyle = '#ff0000';
@@ -85,49 +68,27 @@ function gameLoop() {
         }
     }
 
-    // Generate new blocks from the sides
-    if (Math.random() < 0.02) {
-        const size = Math.random() * 15 + 10;
+    // Generate larger enemy blocks (red)
+    if (Math.random() < 0.01) {
+        const size = Math.random() * 50 + 20;
         const side = Math.floor(Math.random() * 4); // 0 for top, 1 for right, 2 for bottom, 3 for left
-        let x, y, xSpeed, ySpeed;
+        let x, y;
 
         if (side === 0) {
             x = Math.random() * (canvas.width - size);
             y = -size;
-            xSpeed = (Math.random() - 0.5) * 30;
-            ySpeed = Math.random() * 2;
         } else if (side === 1) {
             x = canvas.width;
             y = Math.random() * (canvas.height - size);
-            xSpeed = -Math.random() * 2;
-            ySpeed = (Math.random() - 0.5) * 30;
         } else if (side === 2) {
             x = Math.random() * (canvas.width - size);
             y = canvas.height;
-            xSpeed = (Math.random() - 0.5) * 30;
-            ySpeed = -Math.random() * 2;
         } else {
             x = -size;
             y = Math.random() * (canvas.height - size);
-            xSpeed = Math.random() * 2;
-            ySpeed = (Math.random() - 0.5) * 30;
         }
 
-        blocks.push({ x, y, size, xSpeed, ySpeed });
-    }
-    // Update player position based on key input
-    // (You can add input handling for player movement here)
-
-    // Give blocks random movements
-    moveBlocks();
-
-    // Generate new blocks
-    if (Math.random() < 0.02) {
-        blocks.push({
-            x: Math.random() * (canvas.width - player.size),
-            y: Math.random() * (canvas.height - player.size),
-            size: Math.random() * 15 + 10,
-        });
+        enemies.push({ x, y, size });
     }
 
     requestAnimationFrame(gameLoop);
@@ -137,36 +98,18 @@ function gameLoop() {
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
         case 'ArrowUp':
-            player.movingUp = true;
+            player.y -= player.speed;
             break;
         case 'ArrowDown':
-            player.movingDown = true;
+            player.y += player.speed;
             break;
         case 'ArrowLeft':
-            player.movingLeft = true;
+            player.x -= player.speed;
             break;
         case 'ArrowRight':
-            player.movingRight = true;
+            player.x += player.speed;
             break;
     }
 });
-
-document.addEventListener('keyup', (e) => {
-    switch (e.key) {
-        case 'ArrowUp':
-            player.movingUp = false;
-            break;
-        case 'ArrowDown':
-            player.movingDown = false;
-            break;
-        case 'ArrowLeft':
-            player.movingLeft = false;
-            break;
-        case 'ArrowRight':
-            player.movingRight = false;
-            break;
-    }
-});
-
 
 gameLoop();
