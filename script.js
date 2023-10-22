@@ -4,8 +4,8 @@ const ctx = canvas.getContext("2d");
 
 const WIDTH = 1080;
 const HEIGHT = 720;
-const PLAYER_RADIUS = 5;
-const ENEMY_RADIUS = 5;
+const PLAYER_RADIUS = 3;
+const ENEMY_RADIUS = 3;
 const PLAYER_SPEED = 0.2;
 const ENEMY_SPEED = 0.1;
 const ACCELERATION = 0.001;
