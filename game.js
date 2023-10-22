@@ -64,6 +64,7 @@ function gameLoop() {
 
         if (isCollision(player, block)) {
             if (player.size > block.size) {
+             
                 // Player grows by a little
                 player.size += 2;
                 blocks.splice(i, 1);
@@ -84,6 +85,36 @@ function gameLoop() {
         }
     }
 
+    // Generate new blocks from the sides
+    if (Math.random() < 0.02) {
+        const size = Math.random() * 15 + 10;
+        const side = Math.floor(Math.random() * 4); // 0 for top, 1 for right, 2 for bottom, 3 for left
+        let x, y, xSpeed, ySpeed;
+
+        if (side === 0) {
+            x = Math.random() * (canvas.width - size);
+            y = -size;
+            xSpeed = (Math.random() - 0.5) * 30;
+            ySpeed = Math.random() * 2;
+        } else if (side === 1) {
+            x = canvas.width;
+            y = Math.random() * (canvas.height - size);
+            xSpeed = -Math.random() * 2;
+            ySpeed = (Math.random() - 0.5) * 30;
+        } else if (side === 2) {
+            x = Math.random() * (canvas.width - size);
+            y = canvas.height;
+            xSpeed = (Math.random() - 0.5) * 30;
+            ySpeed = -Math.random() * 2;
+        } else {
+            x = -size;
+            y = Math.random() * (canvas.height - size);
+            xSpeed = Math.random() * 2;
+            ySpeed = (Math.random() - 0.5) * 30;
+        }
+
+        blocks.push({ x, y, size, xSpeed, ySpeed });
+    }
     // Update player position based on key input
     // (You can add input handling for player movement here)
 
