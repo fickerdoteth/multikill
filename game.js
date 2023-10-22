@@ -2,19 +2,30 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 const player = {
-    x: canvas.width / 2 - 15,
-    y: canvas.height / 2 - 15,
+    x: 50,
+    y: 50,
     size: 30,
     dx: 0,
     dy: 0,
     speed: 4
 };
 
-const blocksArray = [];
+const block = {
+    x: Math.random() * (canvas.width - 30),
+    y: Math.random() * (canvas.height - 30),
+    size: 30
+};
+
+let score = 0;
 
 function drawPlayer() {
     ctx.fillStyle = "red";
     ctx.fillRect(player.x, player.y, player.size, player.size);
+}
+
+function drawBlock() {
+    ctx.fillStyle = "blue";
+    ctx.fillRect(block.x, block.y, block.size, block.size);
 }
 
 function updatePlayer() {
@@ -29,7 +40,7 @@ function updatePlayer() {
 }
 
 function movePlayer(e) {
-    switch(e.keyCode) {
+    switch (e.keyCode) {
         case 37: // Left
             player.dx = -player.speed;
             player.dy = 0;
@@ -49,52 +60,33 @@ function movePlayer(e) {
     }
 }
 
-function spawnBlock() {
-    const size = Math.random() * (player.size - 10) + 5;
-    const x = Math.random() * (canvas.width - size);
-    const y = Math.random() * (canvas.height - size);
-
-    blocksArray.push({
-        x,
-        y,
-        size
-    });
-}
-
-function drawBlocks() {
-    ctx.fillStyle = "blue";
-    for(let block of blocksArray) {
-        ctx.fillRect(block.x, block.y, block.size, block.size);
+function checkCollision() {
+    if (player.x < block.x + block.size &&
+        player.x + player.size > block.x &&
+        player.y < block.y + block.size &&
+        player.y + player.size > block.y) {
+        score++;
+        block.x = Math.random() * (canvas.width - 30);
+        block.y = Math.random() * (canvas.height - 30);
     }
 }
 
-function eatBlock() {
-    for(let i = 0; i < blocksArray.length; i++) {
-        let block = blocksArray[i];
-        if (player.x < block.x + block.size &&
-            player.x + player.size > block.x &&
-            player.y < block.y + block.size &&
-            player.y + player.size > block.y) {
-            blocksArray.splice(i, 1);
-            player.size += 5; // Increase player size a bit more for each block eaten
-            spawnBlock();
-        }
-    }
+function displayScore() {
+    ctx.fillStyle = "black";
+    ctx.font = "20px Arial";
+    ctx.fillText(`Score: ${score}`, 10, 20);
 }
 
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
-    drawBlocks();
+    drawBlock();
     updatePlayer();
-    eatBlock();
+    checkCollision();
+    displayScore();
     requestAnimationFrame(update);
 }
 
 document.addEventListener("keydown", movePlayer);
-
-for(let i = 0; i < 20; i++) {
-    spawnBlock();
-}
 
 update();
