@@ -25,7 +25,7 @@ function isCollision(block1, block2) {
     );
 }
 
-// Function to give blocks random movements
+// Function to give blocks random movements and handle bouncing
 function moveBlocks() {
     for (let i = 0; i < blocks.length; i++) {
         const block = blocks[i];
@@ -33,8 +33,17 @@ function moveBlocks() {
         // Random movement
         block.x += (Math.random() - 0.5) * 5; // Adjust the 5 to control block movement speed
         block.y += (Math.random() - 0.5) * 5; // Adjust the 5 to control block movement speed
+
+        // Bounce off walls
+        if (block.x < 0 || block.x + block.size > canvas.width) {
+            block.xSpeed = -block.xSpeed;
+        }
+        if (block.y < 0 || block.y + block.size > canvas.height) {
+            block.ySpeed = -block.ySpeed;
+        }
     }
 }
+
 
 // Game loop
 function gameLoop() {
@@ -62,6 +71,16 @@ function gameLoop() {
             } else {
                 isGameOver = true;
             }
+        }
+    }
+ // Draw and check collisions with larger enemy blocks
+    for (let i = 0; i < enemies.length; i++) {
+        const enemy = enemies[i];
+        ctx.fillStyle = '#ff0000';
+        ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size);
+
+        if (isCollision(player, enemy)) {
+            isGameOver = true;
         }
     }
 
