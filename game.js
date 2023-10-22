@@ -2,21 +2,19 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 const player = {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
+    x: canvas.width / 2 - 15,  // Adjusting starting x to represent the top-left of block
+    y: canvas.height / 2 - 15, // Adjusting starting y
     size: 30,
     dx: 0,
     dy: 0,
     speed: 4
 };
 
-const fishArray = [];
+const blocksArray = [];
 
 function drawPlayer() {
     ctx.fillStyle = "red";
-    ctx.beginPath();
-    ctx.arc(player.x, player.y, player.size, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.fillRect(player.x, player.y, player.size, player.size);  // Drawing player as a rectangle
 }
 
 function updatePlayer() {
@@ -45,36 +43,36 @@ function movePlayer(e) {
     }
 }
 
-function spawnFish() {
-    const size = Math.random() * (player.size - 10) + 5;  // Ensuring fish is smaller than player
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height;
+function spawnBlock() {
+    const size = Math.random() * (player.size - 10) + 5;
+    const x = Math.random() * (canvas.width - size); // Ensuring block doesn't spawn outside canvas
+    const y = Math.random() * (canvas.height - size);
 
-    fishArray.push({
+    blocksArray.push({
         x,
         y,
         size
     });
 }
 
-function drawFish() {
+function drawBlocks() {
     ctx.fillStyle = "blue";
-    for(let fish of fishArray) {
-        ctx.beginPath();
-        ctx.arc(fish.x, fish.y, fish.size, 0, Math.PI * 2);
-        ctx.fill();
+    for(let block of blocksArray) {
+        ctx.fillRect(block.x, block.y, block.size, block.size);  // Drawing blocks as rectangles
     }
 }
 
-function eatFish() {
-    for(let i = 0; i < fishArray.length; i++) {
-        let fish = fishArray[i];
-        let distance = Math.sqrt((player.x - fish.x) ** 2 + (player.y - fish.y) ** 2);
+function eatBlock() {
+    for(let i = 0; i < blocksArray.length; i++) {
+        let block = blocksArray[i];
+        let dx = player.x - block.x;
+        let dy = player.y - block.y;
+        let widthSum = player.size + block.size;
 
-        if(distance < player.size) {  // Corrected the condition to check if the fish is within player's size
-            fishArray.splice(i, 1);
-            player.size += 1;
-            spawnFish();
+        if (dx < widthSum && dx + player.size > 0 && dy < widthSum && dy + player.size > 0) {  // AABB collision detection
+            blocksArray.splice(i, 1);
+            player.size += 1;  // Increase player size when block is eaten
+            spawnBlock();
         }
     }
 }
@@ -82,16 +80,16 @@ function eatFish() {
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
-    drawFish();
+    drawBlocks();
     updatePlayer();
-    eatFish();
+    eatBlock();
     requestAnimationFrame(update);
 }
 
 document.addEventListener("keydown", movePlayer);
 
 for(let i = 0; i < 20; i++) {
-    spawnFish();
+    spawnBlock();
 }
 
 update();
