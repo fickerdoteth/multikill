@@ -31,8 +31,8 @@ function moveBlocks() {
         const block = blocks[i];
 
         // Random movement
-        block.x += (Math.random() - 0.5) * 5; // Adjust the 5 to control block movement speed
-        block.y += (Math.random() - 0.5) * 5; // Adjust the 5 to control block movement speed
+        block.x += (Math.random() - 0.5) * 50; // Adjust the 5 to control block movement speed
+        block.y += (Math.random() - 0.5) * 50; // Adjust the 5 to control block movement speed
 
         // Bounce off walls
         if (block.x < 0 || block.x + block.size > canvas.width) {
