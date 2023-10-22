@@ -10,7 +10,7 @@ const player = {
 };
 
 // Blocks on the screen
-const blocks = [];
+const blocks = [35];
 
 // Game variables
 let isGameOver = false;
