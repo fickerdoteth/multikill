@@ -12,7 +12,7 @@ const dot = {
   size: 5,
   speedX: 0, // Initial horizontal speed
   speedY: 0, // Initial vertical speed
-  acceleration: 1., // Acceleration factor
+  acceleration: 5, // Acceleration factor
   friction: 0.50, // Friction factor
 };
 
