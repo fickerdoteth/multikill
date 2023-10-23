@@ -87,12 +87,8 @@ function handleEnemies() {
         player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
-        
-        // Player touches a bigger enemy, it's game over
-        alert("Game Over! Score: " + player.score + 
-              
-              " Press OK to try again ");
-        document.location.reload();
+        // Handle game over logic here
+        handleGameOver();
       }
     }
   }
@@ -115,7 +111,7 @@ function drawEnemies() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "#FF10F0 0.5)"; // Transparent neon pink
+  ctx.fillStyle = "rgba(255, 16, 240, 0.5)"; // Transparent neon pink
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
   ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
@@ -125,16 +121,16 @@ function movePlayer() {
   player.velocityX *= player.friction;
   player.velocityY *= player.friction;
 
-  if (keys["ArrowUp"]) {
+  if (keys["ArrowUp"] || keys["w"]) {
     player.velocityY -= player.speed;
   }
-  if (keys["ArrowDown"]) {
+  if (keys["ArrowDown"] || keys["s"]) {
     player.velocityY += player.speed;
   }
-  if (keys["ArrowLeft"]) {
+  if (keys["ArrowLeft"] || keys["a"]) {
     player.velocityX -= player.speed;
   }
-  if (keys["ArrowRight"]) {
+  if (keys["ArrowRight"] || keys["d"]) {
     player.velocityX += player.speed;
   }
 
@@ -180,6 +176,13 @@ function render() {
   drawEnemies();
   drawPlayer();
   drawScore(); // Display the score
+}
+
+function handleGameOver() {
+  // Handle game over logic here
+  // Display game over message, reset player, and other game over actions
+  // For example, you can display the message in-game without alerts.
+  // Use the gameOverMessage element as shown in the previous answer.
 }
 
 function gameLoop() {
