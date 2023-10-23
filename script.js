@@ -12,7 +12,7 @@ const player = {
   velocityX: 1.5,
   velocityY: 1.5,
   friction: 0.08,
-  score: 0, // Initialize the score
+  score: 0,
 };
 
 const enemies = [];
@@ -166,31 +166,24 @@ window.addEventListener("keyup", (e) => {
 
 let gameRunning = true; // Track game state
 
-function update() {
+let lastTimestamp = 0;
+const frameInterval = 1000 / 60; // 60 FPS
+
+function gameLoop(timestamp) {
   if (gameRunning) {
-    movePlayer();
-    handleEnemies();
-  }
-}
+    const elapsed = timestamp - lastTimestamp;
 
-function render() {
-  ctx.fillStyle = "#000000";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (elapsed > frameInterval) {
+      lastTimestamp = timestamp - (elapsed % frameInterval);
 
-  drawEnemies();
-  drawPlayer();
-  if (!gameRunning) {
+      update();
+      render();
+    }
+
+    requestAnimationFrame(gameLoop);
+  } else {
     showGameOverOverlay();
   }
-  if (gameRunning) {
-    drawScore(); // Display the score only when the game is running
-  }
-}
-
-function gameLoop() {
-  update();
-  render();
-  requestAnimationFrame(gameLoop);
 }
 
 canvas.addEventListener("click", function (e) {
@@ -258,4 +251,5 @@ function resetGame() {
   gameLoop();
 }
 
-gameLoop();
+// Start the game loop
+requestAnimationFrame(gameLoop);
