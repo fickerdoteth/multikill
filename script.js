@@ -15,7 +15,7 @@ const player = {
 };
 
 const enemies = [];
-const maxEnemies = 15;
+const maxEnemies = 50; // Increase the number of enemies
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -67,23 +67,11 @@ function drawPlayer() {
 }
 
 function drawEnemies() {
+  ctx.fillStyle = "#FFFFFF"; // White enemies
   for (const enemy of enemies) {
-    ctx.fillStyle = getEnemyColor(enemy.radius); // Set enemy color based on size
     ctx.beginPath();
     ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
     ctx.fill();
-  }
-}
-
-function getEnemyColor(radius) {
-  if (radius <= 10) {
-    return "#FF0000"; // Small enemy
-  } else if (radius <= 15) {
-    return "#00FF00"; // Medium enemy
-  } else if (radius <= 20) {
-    return "#0000FF"; // Big enemy
-  } else {
-    return "#FFFF00"; // Huge enemy
   }
 }
 
