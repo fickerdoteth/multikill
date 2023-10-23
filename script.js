@@ -42,12 +42,15 @@ window.addEventListener("keyup", (e) => {
 
 // Function to create a random enemy
 function createRandomEnemy() {
+  const spawnSide = Math.random() < 0.5 ? -1 : 1; // -1 for left, 1 for right
+  const initialX = spawnSide === -1 ? -20 : canvas.width + 20;
+  const initialY = Math.random() * canvas.height;
   enemies.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
+    x: initialX,
+    y: initialY,
     size: 20,
     speed: 2 + Math.random() * 2,
-    direction: Math.random() < 0.5 ? 1 : -1, // 1 for right, -1 for left
+    direction: spawnSide,
   });
 }
 
@@ -55,13 +58,13 @@ function createRandomEnemy() {
 function restartGame() {
   isGameOver = false;
 
-  // Reset dot position
+  // Clear dot position
   dot.x = canvas.width / 2;
   dot.y = canvas.height / 2;
 
-  // Reset enemy positions
+  // Clear enemy positions
   enemies.length = 0;
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 2; i++) {
     createRandomEnemy();
   }
 }
