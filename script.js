@@ -13,7 +13,7 @@ const dot = {
   speedX: 0, // Initial horizontal speed
   speedY: 0, // Initial vertical speed
   acceleration: 2.5, // Acceleration factor
-  friction: 0.75, // Friction factor
+  friction: 0.95, // Friction factor
 };
 
 // Enemy properties
@@ -32,11 +32,15 @@ function createRandomEnemy() {
 // Game state
 let isGameOver = false;
 
+let lastKeyTime = 0;
+const keyDelay = 500; // Delay after key release (milliseconds)
+
 // Handle user input
 const keys = {};
 
 window.addEventListener("keydown", (e) => {
   keys[e.key] = true;
+  lastKeyTime = Date.now(); // Update the last key press time
 
   if (isGameOver && (e.key === "Enter" || e.key === " ") && !keys[e.key]) {
     // Restart the game
@@ -46,6 +50,7 @@ window.addEventListener("keydown", (e) => {
 
 window.addEventListener("keyup", (e) => {
   keys[e.key] = false;
+  lastKeyTime = Date.now(); // Update the last key release time
 });
 
 // Function to restart the game
@@ -162,9 +167,3 @@ function render() {
 // Game loop
 function gameLoop() {
   update();
-  render();
-  requestAnimationFrame(gameLoop);
-}
-
-// Start the game loop
-gameLoop();
