@@ -9,10 +9,11 @@ canvas.height = 600;
 const dot = {
   x: canvas.width / 2,
   y: canvas.height / 2,
-  size: 10,
-  speed: 0, // Initial speed
-  acceleration: 0.1, // Acceleration factor
-  friction: 0.98, // Friction factor
+  size: 5,
+  speedX: 0, // Initial horizontal speed
+  speedY: 0, // Initial vertical speed
+  acceleration: 0.04, // Acceleration factor
+  friction: 0.70, // Friction factor
 };
 
 // Game state
@@ -38,49 +39,61 @@ window.addEventListener("keyup", (e) => {
 function restartGame() {
   isGameOver = false;
 
-  // Reset dot position and speed
+  // Reset dot position and speeds
   dot.x = canvas.width / 2;
   dot.y = canvas.height / 2;
-  dot.speed = 0;
+  dot.speedX = 0;
+  dot.speedY = 0;
 }
 
 // Update function
 function update() {
   if (!isGameOver) {
     // Apply friction to slow down the dot
-    dot.speed *= dot.friction;
+    dot.speedX *= dot.friction;
+    dot.speedY *= dot.friction;
 
     if (keys["ArrowUp"]) {
       // Accelerate upward
-      dot.speed -= dot.acceleration;
+      dot.speedY -= dot.acceleration;
     }
     if (keys["ArrowDown"]) {
       // Accelerate downward
-      dot.speed += dot.acceleration;
+      dot.speedY += dot.acceleration;
     }
     if (keys["ArrowLeft"]) {
       // Accelerate to the left
-      dot.speed -= dot.acceleration;
+      dot.speedX -= dot.acceleration;
     }
     if (keys["ArrowRight"]) {
       // Accelerate to the right
-      dot.speed += dot.acceleration;
+      dot.speedX += dot.acceleration;
     }
 
-    // Limit the speed to a maximum value
+    // Limit the speeds in both directions
     const maxSpeed = 5;
-    dot.speed = Math.min(maxSpeed, Math.max(-maxSpeed, dot.speed));
+    dot.speedX = Math.min(maxSpeed, Math.max(-maxSpeed, dot.speedX));
+    dot.speedY = Math.min(maxSpeed, Math.max(-maxSpeed, dot.speedY));
 
     // Update the dot's position
-    dot.x += dot.speed;
+    dot.x += dot.speedX;
+    dot.y += dot.speedY;
 
     // Keep the dot within the canvas boundaries
     if (dot.x < 0) {
       dot.x = 0;
-      dot.speed = 0;
+      dot.speedX = 0;
     } else if (dot.x > canvas.width) {
       dot.x = canvas.width;
-      dot.speed = 0;
+      dot.speedX = 0;
+    }
+
+    if (dot.y < 0) {
+      dot.y = 0;
+      dot.speedY = 0;
+    } else if (dot.y > canvas.height) {
+      dot.y = canvas.height;
+      dot.speedY = 0;
     }
   }
 }
@@ -97,7 +110,7 @@ function render() {
     // Game over screen
     ctx.fillStyle = "red";
     ctx.font = "30px Arial";
-    ctx.fillText("Game Over! Press Enter or Space to Restart", canvas.width / 2 - 250, canvas.height / 2);
+    ctx.fillText("Game Over! Reload page", canvas.width / 2 - 250, canvas.height / 2);
   }
 }
 
