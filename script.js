@@ -16,8 +16,8 @@ const dot = {
 // Enemy block properties
 const enemies = [];
 
-// Create up to 25 enemy blocks
-for (let i = 0; i < 25; i++) {
+// Create up to 20 enemy blocks
+for (let i = 0; i < 20; i++) {
   enemies.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
