@@ -11,7 +11,7 @@ const player = {
   speed: 2,
   velocityX: 1.5,
   velocityY: 1.5,
-  friction: 0.02,
+  friction: 0.15,
   score: 0, // Initialize the score
 };
 
