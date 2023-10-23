@@ -13,6 +13,22 @@ const dot = {
   speed: 5,
 };
 
+// Enemy block properties
+const enemies = [];
+
+// Generate up to 20 enemy blocks
+for (let i = 0; i < Math.min(20, Math.floor(Math.random() * 21)); i++) {
+  enemies.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: 20,
+    speed: 2 + Math.random() * 2,
+  });
+}
+
+// Game state
+let isGameOver = false;
+
 // Handle user input
 const keys = {};
 
@@ -24,34 +40,74 @@ window.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
 
-// Player's velocity with acceleration
-const ACCELERATION = 0.1;
-const MAX_VELOCITY = 5; // Maximum velocity for the player
-let player_velocity_x = 0;
-let player_velocity_y = 0;
-
 // Update function
 function update() {
-  if (keys["ArrowUp"] || keys["KeyW"] && dot.y > 0.1) {
-    player_velocity_y -= ACCELERATION;
-  }
-  if (keys["ArrowDown"] || keys["KeyS"] && dot.y < canvas.height) {
-    player_velocity_y += ACCELERATION;
-  }
-  if (keys["ArrowLeft"] || keys["KeyA"] && dot.x > 0.1) {
-    player_velocity_x -= ACCELERATION;
-  }
-  if (keys["ArrowRight"] || keys["KeyD"] && dot.x < canvas.width) {
-    player_velocity_x += ACCELERATION;
-  }
+  if (!isGameOver) {
+    // Move each enemy block from left to right
+    for (const enemy of enemies) {
+      enemy.x += enemy.speed;
 
-  // Limit the player's velocity
-  player_velocity_x = Math.max(-MAX_VELOCITY, Math.min(MAX_VELOCITY, player_velocity_x));
-  player_velocity_y = Math.max(-MAX_VELOCITY, Math.min(MAX_VELOCITY, player_velocity_y));
+      // If the enemy block goes off the screen, reset its position
+      if (enemy.x > canvas.width + enemy.size) {
+        enemy.x = -enemy.size;
+        enemy.y = Math.random() * canvas.height;
+        enemy.speed = 2 + Math.random() * 2;
+      }
 
-  // Apply velocity to the player's position
-  dot.x += player_velocity_x;
-  dot.y += player_velocity_y;
+      // Check for collision with the enemy block
+      if (
+        dot.x - dot.size / 2 < enemy.x + enemy.size / 2 &&
+        dot.x + dot.size / 2 > enemy.x - enemy.size / 2 &&
+        dot.y - dot.size / 2 < enemy.y + enemy.size / 2 &&
+        dot.y + dot.size / 2 > enemy.y - enemy.size / 2
+      ) {
+        isGameOver = true;
+      }
+    }
+
+    if (keys["ArrowUp"] && dot.y - dot.speed > 0) {
+      dot.y -= dot.speed;
+    }
+    if (keys["ArrowDown"] && dot.y + dot.speed < canvas.height) {
+      dot.y += dot.speed;
+    }
+    if (keys["ArrowLeft"] && dot.x - dot.speed > 0) {
+      dot.x -= dot.speed;
+    }
+    if (keys["ArrowRight"] && dot.x + dot.speed < canvas.width) {
+      dot.x += dot.speed;
+    }
+  }
 }
 
-// ... (rest of the code remains the same)
+// Render function
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (!isGameOver) {
+    // Draw each enemy block
+    ctx.fillStyle = "red";
+    for (const enemy of enemies) {
+      ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size);
+    }
+
+    // Draw player's dot
+    ctx.fillStyle = "white";
+    ctx.fillRect(dot.x - dot.size / 2, dot.y - dot.size / 2, dot.size, dot.size);
+  } else {
+    // Game over screen
+    ctx.fillStyle = "red";
+    ctx.font = "30px Arial";
+    ctx.fillText("Game Over!", canvas.width / 2 - 100, canvas.height / 2);
+  }
+}
+
+// Game loop
+function gameLoop() {
+  update();
+  render();
+  requestAnimationFrame(gameLoop);
+}
+
+// Start the game loop
+gameLoop();
