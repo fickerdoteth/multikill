@@ -13,14 +13,6 @@ const dot = {
   speed: 5,
 };
 
-// Enemy block properties
-const enemies = [];
-
-// Create up to 2 enemy blocks
-for (let i = 0; i < 2; i++) {
-  createRandomEnemy();
-}
-
 // Game state
 let isGameOver = false;
 
@@ -40,62 +32,18 @@ window.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
 
-// Function to create a random enemy
-function createRandomEnemy() {
-  const spawnSide = Math.random() < 0.5 ? -1 : 1; // -1 for left, 1 for right
-  const initialX = spawnSide === -1 ? -20 : canvas.width + 20;
-  const initialY = Math.random() * canvas.height;
-  enemies.push({
-    x: initialX,
-    y: initialY,
-    size: 20,
-    speed: 2 + Math.random() * 2,
-    direction: spawnSide,
-  });
-}
-
 // Function to restart the game
 function restartGame() {
   isGameOver = false;
 
-  // Clear dot position
+  // Reset dot position
   dot.x = canvas.width / 2;
   dot.y = canvas.height / 2;
-
-  // Clear enemy positions
-  enemies.length = 0;
-  for (let i = 0; i < 2; i++) {
-    createRandomEnemy();
-  }
 }
 
 // Update function
 function update() {
   if (!isGameOver) {
-    // Move each enemy block
-    for (const enemy of enemies) {
-      enemy.x += enemy.speed * enemy.direction;
-
-      // If an enemy block goes off the screen, create a new enemy
-      if (enemy.x < -enemy.size || enemy.x > canvas.width + enemy.size) {
-        createRandomEnemy();
-        const index = enemies.indexOf(enemy);
-        if (index !== -1) {
-          enemies.splice(index, 1);
-        }
-      }
-
-      // Check for collision with the enemy block
-      if (
-        dot.x - dot.size / 2 < enemy.x + enemy.size / 2 &&
-        dot.x + dot.size / 2 > enemy.x - enemy.size / 2 &&
-        dot.y - dot.size / 2 < enemy.y + enemy.size / 2 &&
-        dot.y + dot.size / 2 > enemy.y - enemy.size / 2
-      ) {
-        isGameOver = true;
-      }
-    }
-
     if (keys["ArrowUp"] && dot.y - dot.speed > 0) {
       dot.y -= dot.speed;
     }
@@ -115,17 +63,11 @@ function update() {
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (!isGameOver) {
-    // Draw each enemy block
-    ctx.fillStyle = "red";
-    for (const enemy of enemies) {
-      ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size);
-    }
+  // Draw player's dot
+  ctx.fillStyle = "white";
+  ctx.fillRect(dot.x - dot.size / 2, dot.y - dot.size / 2, dot.size, dot.size);
 
-    // Draw player's dot
-    ctx.fillStyle = "white";
-    ctx.fillRect(dot.x - dot.size / 2, dot.y - dot.size / 2, dot.size, dot.size);
-  } else {
+  if (isGameOver) {
     // Game over screen
     ctx.fillStyle = "red";
     ctx.font = "30px Arial";
