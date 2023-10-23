@@ -9,9 +9,9 @@ const player = {
   y: canvas.height / 2,
   radius: 5,
   speed: 2,
-  velocityX: 2.0,
-  velocityY: 2.0,
-  friction: 0.3,
+  velocityX: 1.0,
+  velocityY: 1.0,
+  friction: 0.1,
 };
 
 const enemies = [];
@@ -29,22 +29,18 @@ function createEnemy() {
 }
 
 function getRandomEnemySize() {
-  const rand = Math.random();
-  if (rand <= 0.05) {
-    // 5%: Sizes 1-4
-    return Math.random() * 4 + 1;
-  } else if (rand <= 0.35) {
-    // 30%: Sizes 5-55
-    return Math.random() * 51 + 5;
-  } else if (rand <= 0.75) {
-    // 40%: Sizes 56-80
-    return Math.random() * 25 + 56;
-  } else if (rand <= 0.9) {
-    // 15%: Sizes 81-90
-    return Math.random() * 10 + 81;
+  const rand = Math.random() * 100;
+
+  if (rand <= 20) {
+    return Math.floor(Math.random() * 4) + 1; // 20% of sizes 1-4
+  } else if (rand <= 55) {
+    return Math.floor(Math.random() * 51) + 5; // 35% of sizes 5-55
+  } else if (rand <= 80) {
+    return Math.floor(Math.random() * 25) + 56; // 25% of sizes 56-80
+  } else if (rand <= 95) {
+    return Math.floor(Math.random() * 11) + 81; // 15% of sizes 81-90
   } else {
-    // 10%: Sizes 91-100
-    return Math.random() * 10 + 91;
+    return Math.floor(Math.random() * 10) + 91; // 5% of sizes 91-100
   }
 }
 
