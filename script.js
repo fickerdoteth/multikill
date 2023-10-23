@@ -16,7 +16,7 @@ const player = {
 };
 
 const enemies = [];
-const maxEnemies = 23;
+const maxEnemies = 24;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -87,13 +87,12 @@ function handleEnemies() {
         player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
+        
         // Player touches a bigger enemy, it's game over
-        const confirmation = window.confirm("Game Over! Score: " + player.score + "\nPress OK to try again");
-        if (confirmation) {
-          player.score = 0; // Reset the score
-          player.radius = 3; // Reset the player's size
-          enemies.length = 0; // Clear the enemies
-        }
+        alert("Game Over! Score: " + player.score + 
+              
+              " Press OK to try again ");
+        document.location.reload();
       }
     }
   }
@@ -116,7 +115,7 @@ function drawEnemies() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "rgba(255, 16, 240, 0.5)"; // Transparent neon pink
+  ctx.fillStyle = "#FF10F0 0.5)"; // Transparent neon pink
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
   ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
@@ -126,16 +125,16 @@ function movePlayer() {
   player.velocityX *= player.friction;
   player.velocityY *= player.friction;
 
-  if (keys["ArrowUp"] || keys["w"]) {
+  if (keys["ArrowUp"]) {
     player.velocityY -= player.speed;
   }
-  if (keys["ArrowDown"] || keys["s"]) {
+  if (keys["ArrowDown"]) {
     player.velocityY += player.speed;
   }
-  if (keys["ArrowLeft"] || keys["a"]) {
+  if (keys["ArrowLeft"]) {
     player.velocityX -= player.speed;
   }
-  if (keys["ArrowRight"] || keys["d"]) {
+  if (keys["ArrowRight"]) {
     player.velocityX += player.speed;
   }
 
@@ -190,4 +189,3 @@ function gameLoop() {
 }
 
 gameLoop();
-
