@@ -14,16 +14,12 @@ const dot = {
 };
 
 // Enemy block properties
-const enemies = [];
-
-for (let i = 0; i < 15; i++) {
-  enemies.push({
-    x: Math.random() * canvas.width, // Random initial X position
-    y: Math.random() * canvas.height, // Random initial Y position
-    size: 20,
-    speed: 2 + Math.random() * 2, // Random speed
-  });
-}
+const enemy = {
+  x: 0,
+  y: Math.random() * canvas.height, // Random initial Y position
+  size: 20,
+  speed: 2 + Math.random() * 2, // Random speed
+};
 
 // Handle user input
 const keys = {};
@@ -38,16 +34,14 @@ window.addEventListener("keyup", (e) => {
 
 // Update function
 function update() {
-  // Move each enemy block from left to right
-  for (const enemy of enemies) {
-    enemy.x += enemy.speed;
+  // Move the enemy block from left to right
+  enemy.x += enemy.speed;
 
-    // If the enemy block goes off the screen, reset its position
-    if (enemy.x > canvas.width + enemy.size) {
-      enemy.x = -enemy.size;
-      enemy.y = Math.random() * canvas.height;
-      enemy.speed = 2 + Math.random() * 2;
-    }
+  // If the enemy block goes off the screen, reset its position
+  if (enemy.x > canvas.width + enemy.size) {
+    enemy.x = -enemy.size;
+    enemy.y = Math.random() * canvas.height;
+    enemy.speed = 2 + Math.random() * 2;
   }
 
   if (keys["ArrowUp"] && dot.y - dot.speed > 0) {
@@ -68,11 +62,9 @@ function update() {
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw each enemy block
+  // Draw enemy block
   ctx.fillStyle = "red";
-  for (const enemy of enemies) {
-    ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size);
-  }
+  ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size);
 
   // Draw player's dot
   ctx.fillStyle = "white";
