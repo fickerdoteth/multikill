@@ -63,8 +63,22 @@ function handleEnemies() {
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance < player.radius + enemy.radius) {
-      // Handle collision, for example, end the game
-      // You can add your custom game logic here
+      let growAmount = 0;
+
+      if (enemy.radius >= 1 && enemy.radius <= 4) {
+        growAmount = 1;
+      } else if (enemy.radius >= 5 && enemy.radius <= 55) {
+        growAmount = 2;
+      } else if (enemy.radius >= 56 && enemy.radius <= 80) {
+        growAmount = 5;
+      } else if (enemy.radius >= 81 && enemy.radius <= 90) {
+        growAmount = 10;
+      } else if (enemy.radius >= 91 && enemy.radius <= 100) {
+        growAmount = 15;
+      }
+
+      player.radius += growAmount;
+      enemies.splice(i, 1);
     }
   }
 }
