@@ -9,13 +9,13 @@ const player = {
   y: canvas.height / 2,
   radius: 5,
   speed: 2,
-  velocityX: 1.2,
-  velocityY: 1.2,
-  friction: 0.07,
+  velocityX: 1.5,
+  velocityY: 1.5,
+  friction: 0.08,
 };
 
 const enemies = [];
-const maxEnemies = 20;
+const maxEnemies = 30;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -63,22 +63,27 @@ function handleEnemies() {
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance < player.radius + enemy.radius) {
-      let growAmount = 0;
+      if (enemy.radius < player.radius) {
+        // Player touches a smaller enemy, grow player
+        if (enemy.radius >= 1 && enemy.radius <= 4) {
+          player.radius += 1; // Grow by 1
+        } else if (enemy.radius >= 5 && enemy.radius <= 55) {
+          player.radius += 2; // Grow by 2
+        } else if (enemy.radius >= 56 && enemy.radius <= 80) {
+          player.radius += 3; // Grow by 3
+        } else if (enemy.radius >= 81 && enemy.radius <= 90) {
+          player.radius += 7; // Grow by 7
+        } else if (enemy.radius >= 91 && enemy.radius <= 100) {
+          player.radius += 10; // Grow by 10
+        }
 
-      if (enemy.radius >= 1 && enemy.radius <= 4) {
-        growAmount = 1;
-      } else if (enemy.radius >= 5 && enemy.radius <= 55) {
-        growAmount = 2;
-      } else if (enemy.radius >= 56 && enemy.radius <= 80) {
-        growAmount = 5;
-      } else if (enemy.radius >= 81 && enemy.radius <= 90) {
-        growAmount = 10;
-      } else if (enemy.radius >= 91 && enemy.radius <= 100) {
-        growAmount = 15;
+        enemies.splice(i, 1); // Remove the smaller enemy
+      } else {
+        // Player touches a bigger enemy, it's game over
+        // You can add your game over logic here
+        alert("Game Over");
+        document.location.reload();
       }
-
-      player.radius += growAmount;
-      enemies.splice(i, 1);
     }
   }
 }
