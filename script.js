@@ -7,7 +7,7 @@ canvas.height = 720;
 const player = {
   x: canvas.width / 2,
   y: canvas.height / 2,
-  radius: 5,
+  radius: 3,
   speed: 2,
   velocityX: 1.5,
   velocityY: 1.5,
@@ -16,7 +16,7 @@ const player = {
 };
 
 const enemies = [];
-const maxEnemies = 20;
+const maxEnemies = 15;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
