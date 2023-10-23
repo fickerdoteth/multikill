@@ -9,9 +9,9 @@ const player = {
   y: canvas.height / 2,
   radius: 5,
   speed: 2,
-  velocityX: 2.5,
-  velocityY: 2.5,
-  friction: 0.4,
+  velocityX: 4.0,
+  velocityY: 4.0,
+  friction: 0.6,
 };
 
 const enemies = [];
@@ -30,7 +30,7 @@ function createEnemy() {
 
 function getRandomEnemySize() {
   // Generate random enemy sizes between 1 and 200
-  return Math.random() * (200 - 1) + 1;
+  return Math.random() * (100 - 1) + 1;
 }
 
 function handleEnemies() {
