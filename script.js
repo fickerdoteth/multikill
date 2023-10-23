@@ -2,14 +2,14 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Set canvas dimensions
-canvas.width = 800;
-canvas.height = 600;
+canvas.width = 1080;
+canvas.height = 720;
 
 // Dot properties
 const dot = {
   x: canvas.width / 2,
   y: canvas.height / 2,
-  size: 10,
+  size: 5,
   speed: 5,
 };
 
