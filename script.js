@@ -7,15 +7,15 @@ canvas.height = window.innerHeight;
 const player = {
   x: canvas.width / 2,
   y: canvas.height / 2,
-  radius: 20,
+  radius: 5,
   speed: 2,
-  velocityX: 0,
-  velocityY: 0,
-  friction: 0.98, // Friction factor to slow down the player
+  velocityX: 0.8,
+  velocityY: 0.8,
+  friction: 0.80, // Friction factor to slow down the player
 };
 
 const enemies = [];
-const maxEnemies = 10;
+const maxEnemies = 15;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
