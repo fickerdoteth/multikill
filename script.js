@@ -87,12 +87,8 @@ function handleEnemies() {
         player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
-        
         // Player touches a bigger enemy, it's game over
-        alert("Game Over! Score: " + player.score + 
-              
-              " Press OK to try again ");
-        document.location.reload();
+        gameRunning = false; // Set the game state to "not running"
       }
     }
   }
@@ -115,7 +111,7 @@ function drawEnemies() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "#FF10F0 0.5)"; // Transparent neon pink
+  ctx.fillStyle = "rgba(255, 16, 240, 0.5)"; // Transparent neon pink
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
   ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
@@ -168,9 +164,13 @@ window.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
 
+let gameRunning = true; // Track game state
+
 function update() {
-  movePlayer();
-  handleEnemies();
+  if (gameRunning) {
+    movePlayer();
+    handleEnemies();
+  }
 }
 
 function render() {
@@ -179,13 +179,83 @@ function render() {
 
   drawEnemies();
   drawPlayer();
-  drawScore(); // Display the score
+  if (!gameRunning) {
+    showGameOverOverlay();
+  }
+  if (gameRunning) {
+    drawScore(); // Display the score only when the game is running
+  }
 }
 
 function gameLoop() {
   update();
   render();
   requestAnimationFrame(gameLoop);
+}
+
+canvas.addEventListener("click", function (e) {
+  handleMouseClick(e);
+});
+
+// Listen for keyboard events
+document.addEventListener("keydown", function (e) {
+  if (!gameRunning) {
+    if (e.key === "Enter" || e.key === " ") {
+      resetGame();
+    }
+  }
+});
+
+function handleMouseClick(e) {
+  if (!gameRunning) {
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+
+    if (
+      clickX >= canvas.width / 2 - 50 &&
+      clickX <= canvas.width / 2 + 50 &&
+      clickY >= canvas.height / 2 + 80 &&
+      clickY <= canvas.height / 2 + 120
+    ) {
+      resetGame();
+    }
+  }
+}
+
+function showGameOverOverlay() {
+  // Game over overlay
+  ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Game over title
+  ctx.fillStyle = "#FF10F0";
+  ctx.font = "48px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 50);
+
+  // Display the player's score
+  ctx.fillStyle = "#FFFFFF";
+  ctx.font = "24px Arial";
+  ctx.fillText("Score: " + player.score, canvas.width / 2, canvas.height / 2);
+
+  // Play button
+  ctx.fillStyle = "#00FF00";
+  ctx.fillRect(canvas.width / 2 - 50, canvas.height / 2 + 80, 100, 40);
+  ctx.fillStyle = "#000000";
+  ctx.font = "24px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText("Play Again", canvas.width / 2, canvas.height / 2 + 100);
+}
+
+function resetGame() {
+  player.x = canvas.width / 2;
+  player.y = canvas.height / 2;
+  player.radius = 3;
+  player.score = 0;
+  enemies.length = 0;
+  gameRunning = true;
+  gameLoop();
 }
 
 gameLoop();
