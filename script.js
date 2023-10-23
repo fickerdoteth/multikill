@@ -87,12 +87,7 @@ function handleEnemies() {
         player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
-        
-        // Player touches a bigger enemy, it's game over
-        alert("Game Over! Score: " + player.score + 
-              
-              " Press OK to try again ");
-        document.location.reload();
+        // Player touches a bigger enemy, the game continues without an alert
       }
     }
   }
@@ -115,7 +110,7 @@ function drawEnemies() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "#FF10F0 0.5)"; // Transparent neon pink
+  ctx.fillStyle = "rgba(255, 16, 240, 0.5)"; // Transparent neon pink
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
   ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
