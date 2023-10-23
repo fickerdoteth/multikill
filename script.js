@@ -29,8 +29,23 @@ function createEnemy() {
 }
 
 function getRandomEnemySize() {
-  // Generate random enemy sizes between 1 and 200
-  return Math.random() * (100 - 1) + 1;
+  const rand = Math.random();
+  if (rand <= 0.05) {
+    // 5%: Sizes 1-4
+    return Math.random() * 4 + 1;
+  } else if (rand <= 0.35) {
+    // 30%: Sizes 5-55
+    return Math.random() * 51 + 5;
+  } else if (rand <= 0.75) {
+    // 40%: Sizes 56-80
+    return Math.random() * 25 + 56;
+  } else if (rand <= 0.9) {
+    // 15%: Sizes 81-90
+    return Math.random() * 10 + 81;
+  } else {
+    // 10%: Sizes 91-100
+    return Math.random() * 10 + 91;
+  }
 }
 
 function handleEnemies() {
