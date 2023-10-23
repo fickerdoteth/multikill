@@ -12,10 +12,11 @@ const player = {
   velocityX: 1.5,
   velocityY: 1.5,
   friction: 0.08,
+  score: 0, // Initialize the score
 };
 
 const enemies = [];
-const maxEnemies = 30;
+const maxEnemies = 33;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -64,24 +65,30 @@ function handleEnemies() {
 
     if (distance < player.radius + enemy.radius) {
       if (enemy.radius < player.radius) {
-        // Player touches a smaller enemy, grow player
+        // Calculate points based on the "grow by" factor
+        let points = 0;
         if (enemy.radius >= 1 && enemy.radius <= 4) {
           player.radius += 1; // Grow by 1
+          points = 1;
         } else if (enemy.radius >= 5 && enemy.radius <= 55) {
           player.radius += 2; // Grow by 2
+          points = 2;
         } else if (enemy.radius >= 56 && enemy.radius <= 80) {
           player.radius += 3; // Grow by 3
+          points = 3;
         } else if (enemy.radius >= 81 && enemy.radius <= 90) {
           player.radius += 7; // Grow by 7
+          points = 7;
         } else if (enemy.radius >= 91 && enemy.radius <= 100) {
           player.radius += 10; // Grow by 10
+          points = 10;
         }
 
+        player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
         // Player touches a bigger enemy, it's game over
-        // You can add your game over logic here
-        alert("Game Over");
+        alert("Game Over! Score: " + player.score + " Press OK to try again ");
         document.location.reload();
       }
     }
@@ -102,6 +109,13 @@ function drawEnemies() {
     ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
     ctx.fill();
   }
+}
+
+function drawScore() {
+  ctx.fillStyle = "rgba(255, 255, 255, 0.5)"; // Transparent white
+  ctx.font = "24px Arial";
+  ctx.textAlign = "right";
+  ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
 }
 
 function movePlayer() {
@@ -162,6 +176,7 @@ function render() {
 
   drawEnemies();
   drawPlayer();
+  drawScore(); // Display the score
 }
 
 function gameLoop() {
