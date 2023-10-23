@@ -16,13 +16,14 @@ const dot = {
 // Enemy block properties
 const enemies = [];
 
-// Generate up to 20 enemy blocks
-for (let i = 0; i < Math.min(20, Math.floor(Math.random() * 21)); i++) {
+// Create up to 25 enemy blocks
+for (let i = 0; i < 25; i++) {
   enemies.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     size: 20,
     speed: 2 + Math.random() * 2,
+    direction: Math.random() < 0.5 ? 1 : -1, // 1 for right, -1 for left
   });
 }
 
@@ -43,15 +44,16 @@ window.addEventListener("keyup", (e) => {
 // Update function
 function update() {
   if (!isGameOver) {
-    // Move each enemy block from left to right
+    // Move each enemy block
     for (const enemy of enemies) {
-      enemy.x += enemy.speed;
+      enemy.x += enemy.speed * enemy.direction;
 
-      // If the enemy block goes off the screen, reset its position
-      if (enemy.x > canvas.width + enemy.size) {
-        enemy.x = -enemy.size;
+      // If an enemy block goes off the screen, reset its position
+      if (enemy.x < -enemy.size || enemy.x > canvas.width + enemy.size) {
+        enemy.x = enemy.direction === 1 ? -enemy.size : canvas.width + enemy.size;
         enemy.y = Math.random() * canvas.height;
         enemy.speed = 2 + Math.random() * 2;
+        enemy.direction = enemy.direction === 1 ? -1 : 1;
       }
 
       // Check for collision with the enemy block
