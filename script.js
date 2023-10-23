@@ -35,11 +35,31 @@ const keys = {};
 
 window.addEventListener("keydown", (e) => {
   keys[e.key] = true;
+
+  if (isGameOver && (e.key === "Enter" || e.key === " ") && !keys[e.key]) {
+    // Restart the game
+    restartGame();
+  }
 });
 
 window.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
+
+// Function to restart the game
+function restartGame() {
+  isGameOver = false;
+
+  // Reset dot position
+  dot.x = canvas.width / 2;
+  dot.y = canvas.height / 2;
+
+  // Reset enemy positions
+  for (const enemy of enemies) {
+    enemy.x = Math.random() * canvas.width;
+    enemy.y = Math.random() * canvas.height;
+  }
+}
 
 // Update function
 function update() {
@@ -100,7 +120,7 @@ function render() {
     // Game over screen
     ctx.fillStyle = "red";
     ctx.font = "30px Arial";
-    ctx.fillText("Game Over!", canvas.width / 2 - 100, canvas.height / 2);
+    ctx.fillText("Game Over! Press Enter or Space to Restart", canvas.width / 2 - 250, canvas.height / 2);
   }
 }
 
