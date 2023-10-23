@@ -2,20 +2,20 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 1080;
-canvas.height = 720; // Set the canvas size to 1080x720
+canvas.height = 720;
 
 const player = {
   x: canvas.width / 2,
   y: canvas.height / 2,
   radius: 5,
   speed: 2,
-  velocityX: 1.5,
-  velocityY: 1.5,
-  friction: 0.2, // Friction factor to slow down the player
+  velocityX: 2.5,
+  velocityY: 2.5,
+  friction: 0.4,
 };
 
 const enemies = [];
-const maxEnemies = 50; // Increase the number of enemies
+const maxEnemies = 50;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -23,15 +23,14 @@ function createEnemy() {
   const y = Math.random() * canvas.height;
   const speedX = fromLeft ? 1 + Math.random() * 2 : -1 - Math.random() * 2;
 
-  const radius = getRandomEnemySize(); // Get a random enemy size
+  const radius = getRandomEnemySize();
 
   enemies.push({ x, y, radius, speedX });
 }
 
 function getRandomEnemySize() {
-  // Generate random enemy sizes: small, medium, big, huge
-  const sizes = [10, 15, 20, 25];
-  return sizes[Math.floor(Math.random() * sizes.length)];
+  // Generate random enemy sizes between 1 and 200
+  return Math.random() * (200 - 1) + 1;
 }
 
 function handleEnemies() {
@@ -60,14 +59,14 @@ function handleEnemies() {
 }
 
 function drawPlayer() {
-  ctx.fillStyle = "#FF10F0"; // Neon pink player
+  ctx.fillStyle = "#FF10F0";
   ctx.beginPath();
   ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
   ctx.fill();
 }
 
 function drawEnemies() {
-  ctx.fillStyle = "#FFFFFF"; // White enemies
+  ctx.fillStyle = "#FFFFFF";
   for (const enemy of enemies) {
     ctx.beginPath();
     ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
@@ -95,7 +94,6 @@ function movePlayer() {
   player.x += player.velocityX;
   player.y += player.velocityY;
 
-  // Keep the player within the canvas boundaries
   if (player.x - player.radius < 0) {
     player.x = player.radius;
     player.velocityX = 0;
@@ -129,7 +127,6 @@ function update() {
 }
 
 function render() {
-  // Set the background color to black
   ctx.fillStyle = "#000000";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
