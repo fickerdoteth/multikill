@@ -11,7 +11,7 @@ const player = {
   speed: 2,
   velocityX: 1.5,
   velocityY: 1.5,
-  friction: 0.08,
+  friction: 0.0,
   score: 0, // Initialize the score
 };
 
@@ -87,12 +87,13 @@ function handleEnemies() {
         player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
-        
         // Player touches a bigger enemy, it's game over
-        alert("Game Over! Score: " + player.score + 
-              
-              " Press OK to try again ");
-        document.location.reload();
+        const confirmation = window.confirm("Game Over! Score: " + player.score + "\nPress OK to try again");
+        if (confirmation) {
+          player.score = 0; // Reset the score
+          player.radius = 3; // Reset the player's size
+          enemies.length = 0; // Clear the enemies
+        }
       }
     }
   }
@@ -115,7 +116,7 @@ function drawEnemies() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "#FF10F0 0.5)"; // Transparent neon pink
+  ctx.fillStyle = "rgba(255, 16, 240, 0.5)"; // Transparent neon pink
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
   ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
@@ -171,6 +172,10 @@ window.addEventListener("keyup", (e) => {
 function update() {
   movePlayer();
   handleEnemies();
+  // Check if the player's score reaches 350
+  if (player.score >= 350) {
+    player.radius = canvas.width / 2; // Expand the player to cover the screen
+  }
 }
 
 function render() {
