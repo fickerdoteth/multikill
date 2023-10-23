@@ -60,7 +60,7 @@ function handleEnemies() {
 }
 
 function drawPlayer() {
-  ctx.fillStyle = "#FF10F0"; // White player
+  ctx.fillStyle = "#FF10F0"; // Neon pink player
   ctx.beginPath();
   ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
   ctx.fill();
