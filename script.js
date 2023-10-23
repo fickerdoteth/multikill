@@ -76,12 +76,12 @@ function drawEnemies() {
 }
 
 function getEnemyColor(radius) {
-  if (radius <= 10) {
-    return "#FFFFF"; // Small enemy
-  } else if (radius <= 15) {
-    return "#FFFFF"; // Medium enemy
-  } else if (radius <= 20) {
-    return "#FFFFF"; // Big enemy
+  if (radius <= 300) {
+    return "#FF0000"; // Small enemy
+  } else if (radius <= 500) {
+    return "#FF0000"; // Medium enemy
+  } else if (radius <= 1000) {
+    return "#FF0000"; // Big enemy
   } else {
     return "#FFFFF"; // Huge enemy
   }
