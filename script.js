@@ -12,8 +12,8 @@ const dot = {
   size: 5,
   speedX: 0, // Initial horizontal speed
   speedY: 0, // Initial vertical speed
-  acceleration: 3.5, // Acceleration factor
-  friction: 0.65, // Friction factor
+  acceleration: 2.5, // Acceleration factor
+  friction: 0.75, // Friction factor
 };
 
 // Enemy properties
