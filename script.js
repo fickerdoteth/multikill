@@ -9,8 +9,8 @@ const player = {
   y: canvas.height / 2,
   radius: 3,
   speed: 2,
-  velocityX: 0.5,
-  velocityY: 0.5,
+  velocityX: 1.5,
+  velocityY: 1.5,
   friction: 0.08,
   score: 0, // Initialize the score
 };
