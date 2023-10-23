@@ -88,7 +88,9 @@ function handleEnemies() {
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
         // Player touches a bigger enemy, it's game over
-        alert("Game Over! Score: " + player.score + " Press OK to try again ");
+        alert("Game Over! Score: " + player.score + 
+              
+              " Press OK to try again ");
         document.location.reload();
       }
     }
