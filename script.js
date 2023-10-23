@@ -16,15 +16,9 @@ const dot = {
 // Enemy block properties
 const enemies = [];
 
-// Create up to 20 enemy blocks
-for (let i = 0; i < 20; i++) {
-  enemies.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    size: 20,
-    speed: 2 + Math.random() * 2,
-    direction: Math.random() < 0.5 ? 1 : -1, // 1 for right, -1 for left
-  });
+// Create up to 25 enemy blocks
+for (let i = 0; i < 25; i++) {
+  createRandomEnemy();
 }
 
 // Game state
@@ -46,6 +40,17 @@ window.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
 
+// Function to create a random enemy
+function createRandomEnemy() {
+  enemies.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: 20,
+    speed: 2 + Math.random() * 2,
+    direction: Math.random() < 0.5 ? 1 : -1, // 1 for right, -1 for left
+  });
+}
+
 // Function to restart the game
 function restartGame() {
   isGameOver = false;
@@ -55,9 +60,9 @@ function restartGame() {
   dot.y = canvas.height / 2;
 
   // Reset enemy positions
-  for (const enemy of enemies) {
-    enemy.x = Math.random() * canvas.width;
-    enemy.y = Math.random() * canvas.height;
+  enemies.length = 0;
+  for (let i = 0; i < 25; i++) {
+    createRandomEnemy();
   }
 }
 
@@ -68,12 +73,13 @@ function update() {
     for (const enemy of enemies) {
       enemy.x += enemy.speed * enemy.direction;
 
-      // If an enemy block goes off the screen, reset its position
+      // If an enemy block goes off the screen, create a new enemy
       if (enemy.x < -enemy.size || enemy.x > canvas.width + enemy.size) {
-        enemy.x = enemy.direction === 1 ? -enemy.size : canvas.width + enemy.size;
-        enemy.y = Math.random() * canvas.height;
-        enemy.speed = 2 + Math.random() * 2;
-        enemy.direction = enemy.direction === 1 ? -1 : 1;
+        createRandomEnemy();
+        const index = enemies.indexOf(enemy);
+        if (index !== -1) {
+          enemies.splice(index, 1);
+        }
       }
 
       // Check for collision with the enemy block
