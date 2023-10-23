@@ -15,7 +15,7 @@ const player = {
 };
 
 const enemies = [];
-const maxEnemies = 15;
+const maxEnemies = 20;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -30,7 +30,7 @@ function createEnemy() {
 
 function getRandomEnemySize() {
   // Generate random enemy sizes: small, medium, big, huge
-  const sizes = [10, 12, 15, 18, 20, 22, 25, 30, 40, 50, 60, 70, 80, 90, 100];
+  const sizes = [2, 5, 10, 12, 15, 18, 20, 22, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95 100, 120, 150, 180, 200, 220, 240, 260, 280, 300, 330, 360, 380, 400, 450, 480, 500, 1000];
   return sizes[Math.floor(Math.random() * sizes.length)];
 }
 
