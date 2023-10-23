@@ -1,8 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// Set canvas dimensions
+canvas.width = 1080;
+canvas.height = 720;
 
 const player = {
   x: canvas.width / 2,
@@ -11,6 +12,30 @@ const player = {
   speed: 5,
 };
 
+// Dot properties
+const dot = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  size: 5,
+  speedX: 0, // Initial horizontal speed
+  speedY: 0, // Initial vertical speed
+  acceleration: 2.5, // Acceleration factor
+  friction: 0.95, // Friction factor
+};
+
+// Enemy properties
+const enemies = [];
+
+function createRandomEnemy() {
+ 
+  // Create a new enemy from the left or right side with random speed
+  const fromLeft = Math.random() < 0.5;
+  const x = fromLeft ? -20 : canvas.width + 20;
+  const y = Math.random() * canvas.height;
+  const speedX = fromLeft ? (1 + Math.random() * 2) : (-1 - Math.random() * 2);
+  
+  enemies.push({ x, y, size: 20, speedX });
+}
 const foods = [];
 const maxFoods = 30;
 
