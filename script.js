@@ -9,9 +9,9 @@ const player = {
   y: canvas.height / 2,
   radius: 5,
   speed: 2,
-  velocityX: 1.5,
-  velocityY: 1.5,
-  friction: 0.08,
+  velocityX: 1.2,
+  velocityY: 1.2,
+  friction: 0.07,
 };
 
 const enemies = [];
