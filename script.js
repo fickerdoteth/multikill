@@ -11,7 +11,7 @@ const player = {
   speed: 2,
   velocityX: 1.5,
   velocityY: 1.5,
-  friction: 0.4, // Friction factor to slow down the player
+  friction: 0.1, // Friction factor to slow down the player
 };
 
 const enemies = [];
@@ -23,7 +23,15 @@ function createEnemy() {
   const y = Math.random() * canvas.height;
   const speedX = fromLeft ? 1 + Math.random() * 2 : -1 - Math.random() * 2;
 
-  enemies.push({ x, y, radius: 20, speedX });
+  const radius = getRandomEnemySize(); // Get a random enemy size
+
+  enemies.push({ x, y, radius, speedX });
+}
+
+function getRandomEnemySize() {
+  // Generate random enemy sizes: small, medium, big, huge
+  const sizes = [10, 15, 20, 25];
+  return sizes[Math.floor(Math.random() * sizes.length)];
 }
 
 function handleEnemies() {
@@ -59,11 +67,23 @@ function drawPlayer() {
 }
 
 function drawEnemies() {
-  ctx.fillStyle = "#33FF66";
   for (const enemy of enemies) {
+    ctx.fillStyle = getEnemyColor(enemy.radius); // Set enemy color based on size
     ctx.beginPath();
     ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
     ctx.fill();
+  }
+}
+
+function getEnemyColor(radius) {
+  if (radius <= 10) {
+    return "#FF0000"; // Small enemy
+  } else if (radius <= 15) {
+    return "#00FF00"; // Medium enemy
+  } else if (radius <= 20) {
+    return "#0000FF"; // Big enemy
+  } else {
+    return "#FFFF00"; // Huge enemy
   }
 }
 
