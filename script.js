@@ -11,7 +11,7 @@ const player = {
   speed: 2,
   velocityX: 2.0,
   velocityY: 2.0,
-  friction: 0.7,
+  friction: 0.5,
 };
 
 const enemies = [];
