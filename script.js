@@ -12,7 +12,7 @@ const player = {
   velocityX: 1.5,
   velocityY: 1.5,
   friction: 0.08,
-  score: 0,
+  score: 0, // Initialize the score
 };
 
 const enemies = [];
@@ -87,8 +87,12 @@ function handleEnemies() {
         player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
+        
         // Player touches a bigger enemy, it's game over
-        gameRunning = false; // Set the game state to "not running"
+        alert("Game Over! Score: " + player.score + 
+              
+              " Press OK to try again ");
+        document.location.reload();
       }
     }
   }
@@ -111,7 +115,7 @@ function drawEnemies() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "rgba(255, 16, 240, 0.5)"; // Transparent neon pink
+  ctx.fillStyle = "#FF10F0 0.5)"; // Transparent neon pink
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
   ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
@@ -164,92 +168,24 @@ window.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
 
-let gameRunning = true; // Track game state
-
-let lastTimestamp = 0;
-const frameInterval = 1000 / 60; // 60 FPS
-
-function gameLoop(timestamp) {
-  if (gameRunning) {
-    const elapsed = timestamp - lastTimestamp;
-
-    if (elapsed > frameInterval) {
-      lastTimestamp = timestamp - (elapsed % frameInterval);
-
-      update();
-      render();
-    }
-
-    requestAnimationFrame(gameLoop);
-  } else {
-    showGameOverOverlay();
-  }
+function update() {
+  movePlayer();
+  handleEnemies();
 }
 
-canvas.addEventListener("click", function (e) {
-  handleMouseClick(e);
-});
-
-// Listen for keyboard events
-document.addEventListener("keydown", function (e) {
-  if (!gameRunning) {
-    if (e.key === "Enter" || e.key === " ") {
-      resetGame();
-    }
-  }
-});
-
-function handleMouseClick(e) {
-  if (!gameRunning) {
-    const rect = canvas.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickY = e.clientY - rect.top;
-
-    if (
-      clickX >= canvas.width / 2 - 50 &&
-      clickX <= canvas.width / 2 + 50 &&
-      clickY >= canvas.height / 2 + 80 &&
-      clickY <= canvas.height / 2 + 120
-    ) {
-      resetGame();
-    }
-  }
-}
-
-function showGameOverOverlay() {
-  // Game over overlay
-  ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+function render() {
+  ctx.fillStyle = "#000000";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Game over title
-  ctx.fillStyle = "#FF10F0";
-  ctx.font = "48px Arial";
-  ctx.textAlign = "center";
-  ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 50);
-
-  // Display the player's score
-  ctx.fillStyle = "#FFFFFF";
-  ctx.font = "24px Arial";
-  ctx.fillText("Score: " + player.score, canvas.width / 2, canvas.height / 2);
-
-  // Play button
-  ctx.fillStyle = "#00FF00";
-  ctx.fillRect(canvas.width / 2 - 50, canvas.height / 2 + 80, 100, 40);
-  ctx.fillStyle = "#000000";
-  ctx.font = "24px Arial";
-  ctx.textAlign = "center";
-  ctx.fillText("Play Again", canvas.width / 2, canvas.height / 2 + 100);
+  drawEnemies();
+  drawPlayer();
+  drawScore(); // Display the score
 }
 
-function resetGame() {
-  player.x = canvas.width / 2;
-  player.y = canvas.height / 2;
-  player.radius = 3;
-  player.score = 0;
-  enemies.length = 0;
-  gameRunning = true;
-  gameLoop();
+function gameLoop() {
+  update();
+  render();
+  requestAnimationFrame(gameLoop);
 }
 
-// Start the game loop
-requestAnimationFrame(gameLoop);
+gameLoop();
