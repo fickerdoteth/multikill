@@ -11,7 +11,7 @@ const player = {
   speed: 2,
   velocityX: 0.8,
   velocityY: 0.8,
-  friction: 1.25, // Friction factor to slow down the player
+  friction: 5.0, // Friction factor to slow down the player
 };
 
 const enemies = [];
