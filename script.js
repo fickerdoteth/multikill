@@ -10,7 +10,9 @@ const dot = {
   x: canvas.width / 2,
   y: canvas.height / 2,
   size: 10,
-  speed: 5,
+  speed: 0, // Initial speed
+  acceleration: 0.1, // Acceleration factor
+  friction: 0.98, // Friction factor
 };
 
 // Game state
@@ -36,25 +38,49 @@ window.addEventListener("keyup", (e) => {
 function restartGame() {
   isGameOver = false;
 
-  // Reset dot position
+  // Reset dot position and speed
   dot.x = canvas.width / 2;
   dot.y = canvas.height / 2;
+  dot.speed = 0;
 }
 
 // Update function
 function update() {
   if (!isGameOver) {
-    if (keys["ArrowUp"] && dot.y - dot.speed > 0) {
-      dot.y -= dot.speed;
+    // Apply friction to slow down the dot
+    dot.speed *= dot.friction;
+
+    if (keys["ArrowUp"]) {
+      // Accelerate upward
+      dot.speed -= dot.acceleration;
     }
-    if (keys["ArrowDown"] && dot.y + dot.speed < canvas.height) {
-      dot.y += dot.speed;
+    if (keys["ArrowDown"]) {
+      // Accelerate downward
+      dot.speed += dot.acceleration;
     }
-    if (keys["ArrowLeft"] && dot.x - dot.speed > 0) {
-      dot.x -= dot.speed;
+    if (keys["ArrowLeft"]) {
+      // Accelerate to the left
+      dot.speed -= dot.acceleration;
     }
-    if (keys["ArrowRight"] && dot.x + dot.speed < canvas.width) {
-      dot.x += dot.speed;
+    if (keys["ArrowRight"]) {
+      // Accelerate to the right
+      dot.speed += dot.acceleration;
+    }
+
+    // Limit the speed to a maximum value
+    const maxSpeed = 5;
+    dot.speed = Math.min(maxSpeed, Math.max(-maxSpeed, dot.speed));
+
+    // Update the dot's position
+    dot.x += dot.speed;
+
+    // Keep the dot within the canvas boundaries
+    if (dot.x < 0) {
+      dot.x = 0;
+      dot.speed = 0;
+    } else if (dot.x > canvas.width) {
+      dot.x = canvas.width;
+      dot.speed = 0;
     }
   }
 }
