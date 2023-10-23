@@ -16,7 +16,7 @@ const player = {
 };
 
 const enemies = [];
-const maxEnemies = 25;
+const maxEnemies = 20;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -87,6 +87,7 @@ function handleEnemies() {
         player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
+        
         // Player touches a bigger enemy, it's game over
         alert("Game Over! Score: " + player.score + 
               
