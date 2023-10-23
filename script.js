@@ -1,8 +1,8 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 1080;
+canvas.height = 720; // Set the canvas size to 1080x720
 
 const player = {
   x: canvas.width / 2,
@@ -11,7 +11,7 @@ const player = {
   speed: 2,
   velocityX: 1.5,
   velocityY: 1.5,
-  friction: 0.1, // Friction factor to slow down the player
+  friction: 0.5, // Friction factor to slow down the player
 };
 
 const enemies = [];
