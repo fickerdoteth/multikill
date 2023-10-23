@@ -9,13 +9,13 @@ const player = {
   y: canvas.height / 2,
   radius: 5,
   speed: 2,
-  velocityX: 1.0,
-  velocityY: 1.0,
-  friction: 0.1,
+  velocityX: 1.5,
+  velocityY: 1.5,
+  friction: 0.08,
 };
 
 const enemies = [];
-const maxEnemies = 40;
+const maxEnemies = 30;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
