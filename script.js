@@ -16,7 +16,7 @@ const player = {
 };
 
 const enemies = [];
-const maxEnemies = 26;
+const maxEnemies = 25;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
