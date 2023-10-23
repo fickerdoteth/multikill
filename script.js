@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 1280;
+canvas.width = 1080;
 canvas.height = 720;
 
 const player = {
