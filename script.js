@@ -12,9 +12,22 @@ const dot = {
   size: 5,
   speedX: 0, // Initial horizontal speed
   speedY: 0, // Initial vertical speed
-  acceleration: 0.04, // Acceleration factor
-  friction: 0.70, // Friction factor
+  acceleration: 1., // Acceleration factor
+  friction: 0.50, // Friction factor
 };
+
+// Enemy properties
+const enemies = [];
+
+function createRandomEnemy() {
+  // Create a new enemy from the left or right side with random speed
+  const fromLeft = Math.random() < 0.5;
+  const x = fromLeft ? -20 : canvas.width + 20;
+  const y = Math.random() * canvas.height;
+  const speedX = fromLeft ? (1 + Math.random() * 2) : (-1 - Math.random() * 2);
+  
+  enemies.push({ x, y, size: 20, speedX });
+}
 
 // Game state
 let isGameOver = false;
@@ -42,13 +55,17 @@ function restartGame() {
   // Reset dot position and speeds
   dot.x = canvas.width / 2;
   dot.y = canvas.height / 2;
-  dot.speedX = 0;
-  dot.speedY = 0;
+  dot.speedX = 0.5;
+  dot.speedY = 0.5;
+
+  // Reset enemies
+  enemies.length = 0;
 }
 
 // Update function
 function update() {
   if (!isGameOver) {
+  
     // Apply friction to slow down the dot
     dot.speedX *= dot.friction;
     dot.speedY *= dot.friction;
@@ -95,6 +112,28 @@ function update() {
       dot.y = canvas.height;
       dot.speedY = 0;
     }
+
+    // Update enemies
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      const enemy = enemies[i];
+      enemy.x += enemy.speedX;
+
+      // If an enemy leaves the screen, respawn it
+      if (enemy.x < -20 || enemy.x > canvas.width + 20) {
+        enemies.splice(i, 1);
+        createRandomEnemy();
+      }
+
+      // Check for collision with the enemy
+      if (
+        dot.x - dot.size / 2 < enemy.x + 10 &&
+        dot.x + dot.size / 2 > enemy.x - 10 &&
+        dot.y - dot.size / 2 < enemy.y + 10 &&
+        dot.y + dot.size / 2 > enemy.y - 10
+      ) {
+        isGameOver = true;
+      }
+    }
   }
 }
 
@@ -105,6 +144,12 @@ function render() {
   // Draw player's dot
   ctx.fillStyle = "white";
   ctx.fillRect(dot.x - dot.size / 2, dot.y - dot.size / 2, dot.size, dot.size);
+
+  // Draw enemies
+  ctx.fillStyle = "red";
+  for (const enemy of enemies) {
+    ctx.fillRect(enemy.x - 10, enemy.y - 10, 20, 20);
+  }
 
   if (isGameOver) {
     // Game over screen
