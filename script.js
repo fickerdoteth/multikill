@@ -112,7 +112,7 @@ function drawEnemies() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "rgba(255, 255, 255, 0.5)"; // Transparent white
+  ctx.fillStyle = "#FF10F0 0.5)"; // Transparent neon pink
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
   ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
