@@ -1,76 +1,90 @@
-import pygame
+const canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+canvas.width = 1080;
+canvas.height = 720;
+const ctx = canvas.getContext('2d');
 
-pygame.init()
+// Constants
+const PLAYER_RADIUS = 5;
+const PLAYER_SPEED = 0.2;
+const ACCELERATION = 0.001;
+const BACKGROUND_COLOR = 'rgb(0, 0, 0)';
+const WHITE = 'rgb(255, 255, 255)';
+const WIDTH = canvas.width;
+const HEIGHT = canvas.height;
 
-# Constants
-WIDTH, HEIGHT = 1080, 720
-PLAYER_RADIUS = 5
-PLAYER_SPEED = 0.2
-ACCELERATION = 0.001  # Acceleration factor
-BACKGROUND_COLOR = (0, 0, 0)  # RGB color
+// Initialize the player
+let player_x = WIDTH / 2;
+let player_y = HEIGHT / 2;
+let player_velocity_x = 0;
+let player_velocity_y = 0;
 
-# Colors
-WHITE = (255, 255, 255)
+// Game loop
+let running = true;
 
-# Initialize the screen
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Multikill")
+function gameLoop() {
+  if (!running) return;
 
-# Create the player fish
-player_x = WIDTH // 2
-player_y = HEIGHT // 2
+  // Move the player with acceleration
+  if (keys['ArrowUp'] || keys['W'] || keys['w']) {
+    player_velocity_y -= ACCELERATION;
+  }
+  if (keys['ArrowDown'] || keys['S'] || keys['s']) {
+    player_velocity_y += ACCELERATION;
+  }
+  if (keys['ArrowLeft'] || keys['A'] || keys['a']) {
+    player_velocity_x -= ACCELERATION;
+  }
+  if (keys['ArrowRight'] || keys['D'] || keys['d']) {
+    player_velocity_x += ACCELERATION;
+  }
 
-# Initialize velocity for smoother movement
-player_velocity_x = 0.
-player_velocity_y = 0.
+  // Apply velocity to the player's position
+  player_x += player_velocity_x;
+  player_y += player_velocity_y;
 
-# Game loop
-running = True
-font = pygame.font.Font(None, 36)
+  // Prevent the player from leaving the canvas
+  if (player_x < 0) {
+    player_x = 0;
+    player_velocity_x = 0;
+  }
+  if (player_x > WIDTH) {
+    player_x = WIDTH;
+    player_velocity_x = 0;
+  }
+  if (player_y < 0) {
+    player_y = 0;
+    player_velocity_y = 0;
+  }
+  if (player_y > HEIGHT) {
+    player_y = HEIGHT;
+    player_velocity_y = 0;
+  }
 
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+  // Slow down the player's velocity
+  player_velocity_x *= 0.999;
+  player_velocity_y *= 0.999;
 
-    # Move the player fish with acceleration
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP] or keys[pygame.K_w] and player_y > 0.1:
-        player_velocity_y -= ACCELERATION
-    if keys[pygame.K_DOWN] or keys[pygame.K_s] and player_y < HEIGHT:
-        player_velocity_y += ACCELERATION
-    if keys[pygame.K_LEFT] or keys[pygame.K_a] and player_x > 0.1:
-        player_velocity_x -= ACCELERATION
-    if keys[pygame.K_RIGHT] or keys[pygame.K_d] and player_x < WIDTH:
-        player_velocity_x += ACCELERATION
+  // Draw the player fish
+  ctx.fillStyle = BACKGROUND_COLOR;
+  ctx.fillRect(0, 0, WIDTH, HEIGHT);
+  ctx.fillStyle = WHITE;
+  ctx.beginPath();
+  ctx.arc(player_x, player_y, PLAYER_RADIUS, 0, Math.PI * 2);
+  ctx.fill();
 
-    # Apply velocity to the player's position
-    player_x += player_velocity_x
-    player_y += player_velocity_y
+  requestAnimationFrame(gameLoop);
+}
 
-    # Prevent the player from leaving the window
-    if player_x < 0:
-        player_x = 0
-        player_velocity_x = 0
-    if player_x > WIDTH:
-        player_x = WIDTH
-        player_velocity_x = 0
-    if player_y < 0:
-        player_y = 0
-        player_velocity_y = 0
-    if player_y > HEIGHT:
-        player_y = HEIGHT
-        player_velocity_y = 0
+// Keyboard controls
+const keys = {};
+document.addEventListener('keydown', (event) => {
+  keys[event.key] = true;
+});
 
-    # Slow down the player's velocity
-    player_velocity_x *= .999
-    player_velocity_y *= .999
+document.addEventListener('keyup', (event) => {
+  keys[event.key] = false;
+});
 
-    # Draw the player fish
-    screen.fill(BACKGROUND_COLOR)
-    pygame.draw.circle(screen, WHITE, (player_x, player_y), PLAYER_RADIUS)
-    pygame.display.update()
-
-# Clean up
-pygame.quit()
-
+// Start the game loop
+gameLoop();
