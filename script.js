@@ -44,7 +44,6 @@ function getRandomEnemySize() {
     return Math.floor(Math.random() * 10) + 91; // 5% of sizes 91-100
   }
 }
-
 function handleEnemies() {
   if (enemies.length < maxEnemies) {
     createEnemy();
@@ -65,38 +64,55 @@ function handleEnemies() {
 
     if (distance < player.radius + enemy.radius) {
       if (enemy.radius < player.radius) {
+      
         // Calculate points based on the "grow by" factor
         let points = 0;
-        if (enemy.radius >= 1 && enemy.radius <= 4) {
-          player.radius += 1; // Grow by 1
-          points = 1;
-        } else if (enemy.radius >= 5 && enemy.radius <= 55) {
-          player.radius += 2; // Grow by 2
-          points = 2;
-        } else if (enemy.radius >= 56 && enemy.radius <= 80) {
-          player.radius += 3; // Grow by 3
-          points = 3;
-        } else if (enemy.radius >= 81 && enemy.radius <= 90) {
-          player.radius += 7; // Grow by 7
-          points = 7;
-        } else if (enemy.radius >= 91 && enemy.radius <= 100) {
-          player.radius += 10; // Grow by 10
-          points = 10;
+
+        if (enemy.radius >= 1 && enemy.radius <= 7) {
+          const newSize = Math.floor(Math.random() * 7) + 1;
+          player.radius += newSize;
+          points = newSize;
+        } else if (enemy.radius >= 8 && enemy.radius <= 22) {
+          const newSize = Math.floor(Math.random() * 15) + 8;
+          player.radius += newSize;
+          points = newSize / 2;
+        } else if (enemy.radius >= 23 && enemy.radius <= 52) {
+          const newSize = Math.floor(Math.random() * 30) + 23;
+          player.radius += newSize;
+          points = newSize / 3;
+        } else if (enemy.radius >= 53 && enemy.radius <= 72) {
+          const newSize = Math.floor(Math.random() * 20) + 53;
+          player.radius += newSize;
+          points = newSize / 4;
+        } else if (enemy.radius >= 73 && enemy.radius <= 92) {
+          const newSize = Math.floor(Math.random() * 20) + 73;
+          player.radius += newSize;
+          points = newSize / 6;
+        } else if (enemy.radius >= 93 && enemy.radius <= 102) {
+          const newSize = Math.floor(Math.random() * 10) + 93;
+          player.radius += newSize;
+          points = newSize / 7;
+        } else if (enemy.radius >= 103 && enemy.radius <= 107) {
+          const newSize = Math.floor(Math.random() * 5) + 103;
+          player.radius += newSize;
+          points = newSize / 10;
+        } else {
+          const newSize = Math.floor(Math.random() * 3) + 108;
+          player.radius += newSize;
+          points = newSize / 15;
         }
 
         player.score += points; // Update the player's score
         enemies.splice(i, 1); // Remove the smaller enemy
       } else {
-        
+      
         // Player touches a bigger enemy, it's game over
-        alert("Game Over! Score: " + player.score + 
-              
-              " Press OK to try again ");
-        document.location.reload();
+        gameRunning = false; // Set the game state to "not running"
       }
     }
   }
 }
+
 
 function drawPlayer() {
   ctx.fillStyle = "#FF10F0";
