@@ -63,7 +63,7 @@ function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw enemy block
-  ctx.fillStyle = "red";
+  ctx.fillStyle = "white";
   ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size);
 
   // Draw player's dot
