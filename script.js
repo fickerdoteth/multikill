@@ -9,8 +9,8 @@ const player = {
   y: canvas.height / 2,
   radius: 5,
   speed: 2,
-  velocityX: 0.8,
-  velocityY: 0.8,
+  velocityX: 1.5,
+  velocityY: 1.5,
   friction: 0.1, // Friction factor to slow down the player
 };
 
