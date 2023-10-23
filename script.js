@@ -13,6 +13,14 @@ const dot = {
   speed: 5,
 };
 
+// Enemy block properties
+const enemy = {
+  x: 0,
+  y: Math.random() * canvas.height, // Random initial Y position
+  size: 20,
+  speed: 2 + Math.random() * 2, // Random speed
+};
+
 // Handle user input
 const keys = {};
 
@@ -26,6 +34,16 @@ window.addEventListener("keyup", (e) => {
 
 // Update function
 function update() {
+  // Move the enemy block from left to right
+  enemy.x += enemy.speed;
+
+  // If the enemy block goes off the screen, reset its position
+  if (enemy.x > canvas.width + enemy.size) {
+    enemy.x = -enemy.size;
+    enemy.y = Math.random() * canvas.height;
+    enemy.speed = 2 + Math.random() * 2;
+  }
+
   if (keys["ArrowUp"] && dot.y - dot.speed > 0) {
     dot.y -= dot.speed;
   }
@@ -43,6 +61,12 @@ function update() {
 // Render function
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw enemy block
+  ctx.fillStyle = "red";
+  ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size);
+
+  // Draw player's dot
   ctx.fillStyle = "white";
   ctx.fillRect(dot.x - dot.size / 2, dot.y - dot.size / 2, dot.size, dot.size);
 }
