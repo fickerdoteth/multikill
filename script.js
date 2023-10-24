@@ -11,12 +11,16 @@ const player = {
   speed: 2,
   velocityX: 1.5,
   velocityY: 1.5,
-  friction: 0.05,
-  score: 0, // Initialize the score
+  friction: 0.02,
+  score: 0,
 };
 
 const enemies = [];
-const maxEnemies = 22;
+const maxEnemies = 25;
+
+let isGameOver = false;
+let isGameFrozen = false;
+let showUI = true;
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -33,19 +37,21 @@ function getRandomEnemySize() {
   const rand = Math.random() * 100;
 
   if (rand <= 20) {
-    return Math.floor(Math.random() * 4) + 1; // 20% of sizes 1-4
+    return Math.floor(Math.random() * 4) + 1;
   } else if (rand <= 55) {
-    return Math.floor(Math.random() * 51) + 5; // 35% of sizes 5-55
+    return Math.floor(Math.random() * 51) + 5;
   } else if (rand <= 80) {
-    return Math.floor(Math.random() * 25) + 56; // 25% of sizes 56-80
+    return Math.floor(Math.random() * 25) + 56;
   } else if (rand <= 95) {
-    return Math.floor(Math.random() * 11) + 81; // 15% of sizes 81-90
+    return Math.floor(Math.random() * 11) + 81;
   } else {
-    return Math.floor(Math.random() * 10) + 91; // 5% of sizes 91-100
+    return Math.floor(Math.random() * 10) + 91;
   }
 }
 
 function handleEnemies() {
+  if (isGameFrozen) return;
+
   if (enemies.length < maxEnemies) {
     createEnemy();
   }
@@ -65,30 +71,29 @@ function handleEnemies() {
 
     if (distance < player.radius + enemy.radius) {
       if (enemy.radius < player.radius) {
-        // Calculate points based on the "grow by" factor
         let points = 0;
         if (enemy.radius >= 1 && enemy.radius <= 4) {
-          player.radius += 1; // Grow by 1
+          player.radius += 1;
           points = 1;
         } else if (enemy.radius >= 5 && enemy.radius <= 55) {
-          player.radius += 2; // Grow by 2
+          player.radius += 2;
           points = 2;
         } else if (enemy.radius >= 56 && enemy.radius <= 80) {
-          player.radius += 3; // Grow by 3
+          player.radius += 3;
           points = 3;
         } else if (enemy.radius >= 81 && enemy.radius <= 90) {
-          player.radius += 7; // Grow by 7
-          points = 7;
+          player.radius += 4;
+          points = 4;
         } else if (enemy.radius >= 91 && enemy.radius <= 100) {
-          player.radius += 10; // Grow by 10
-          points = 10;
+          player.radius += 5;
+          points = 5;
         }
 
-        player.score += points; // Update the player's score
-        enemies.splice(i, 1); // Remove the smaller enemy
+        player.score += points;
+        enemies.splice(i, 1);
       } else {
-        // Handle game over logic here
-        handleGameOver();
+        isGameOver = true;
+        isGameFrozen = true;
       }
     }
   }
@@ -111,13 +116,17 @@ function drawEnemies() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "rgba(255, 16, 240, 0.5)"; // Transparent neon pink
+  ctx.fillStyle = "rgba(255, 16, 240, 0.5)";
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
-  ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
+  if (showUI) {
+    ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
+  }
 }
 
 function movePlayer() {
+  if (isGameFrozen) return;
+
   player.velocityX *= player.friction;
   player.velocityY *= player.friction;
 
@@ -175,20 +184,56 @@ function render() {
 
   drawEnemies();
   drawPlayer();
-  drawScore(); // Display the score
-}
+  drawScore();
 
-function handleGameOver() {
-  // Handle game over logic here
-  // Display game over message, reset player, and other game over actions
-  // For example, you can display the message in-game without alerts.
-  // Use the gameOverMessage element as shown in the previous answer.
+  if (isGameOver && showUI) {
+    ctx.fillStyle = "#FF10F0";
+    ctx.font = "80px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 18);
+    ctx.font = "24px Arial";
+    ctx.fillText("Press Space to Restart", canvas.width / 2, canvas.height / 2 + 54);
+  }
 }
 
 function gameLoop() {
   update();
   render();
   requestAnimationFrame(gameLoop);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (isGameOver && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
+    restartGame();
+  }
+
+  if (e.key === "Tab") {
+    showUI = !showUI;
+  }
+  
+  if (e.key === "f") {
+    toggleFullscreen();
+  }
+});
+
+function restartGame() {
+  player.x = canvas.width / 2;
+  player.y = canvas.height / 2;
+  player.radius = 3;
+  player.score = 0;
+  enemies.length = 0;
+  isGameOver = false;
+  isGameFrozen = false;
+}
+
+function toggleFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else {
+    canvas.requestFullscreen().catch((err) => {
+      console.error("Error attempting to enable fullscreen:", err.message);
+    });
+  }
 }
 
 gameLoop();
