@@ -16,7 +16,7 @@ const player = {
 };
 
 const enemies = [];
-const maxEnemies = 22;
+const maxEnemies = 17;
 
 let isGameOver = false;
 let isGameFrozen = false;
