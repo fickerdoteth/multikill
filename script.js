@@ -16,7 +16,7 @@ const player = {
 };
 
 const enemies = [];
-const maxEnemies = 21;
+const maxEnemies = 23;
 
 let isGameOver = false;
 let isGameFrozen = false;
@@ -74,19 +74,19 @@ function handleEnemies() {
         let points = 0;
         if (enemy.radius >= 1 && enemy.radius <= 4) {
           player.radius += 1;
-          points = 1;
+          points = 10;
         } else if (enemy.radius >= 5 && enemy.radius <= 55) {
           player.radius += 2;
-          points = 2;
+          points = 20;
         } else if (enemy.radius >= 56 && enemy.radius <= 80) {
           player.radius += 3;
-          points = 3;
+          points = 30;
         } else if (enemy.radius >= 81 && enemy.radius <= 90) {
           player.radius += 4;
-          points = 4;
+          points = 40;
         } else if (enemy.radius >= 91 && enemy.radius <= 100) {
           player.radius += 5;
-          points = 5;
+          points = 50;
         }
 
         player.score += points;
