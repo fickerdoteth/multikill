@@ -1,1 +1,309 @@
-const _0x459bbc=_0x43f0;(function(_0x4ac7be,_0x4d9e39){const _0x1858f2=_0x43f0,_0x387337=_0x4ac7be();while(!![]){try{const _0x25e3a7=parseInt(_0x1858f2(0xc4))/0x1*(-parseInt(_0x1858f2(0xce))/0x2)+parseInt(_0x1858f2(0xc3))/0x3+parseInt(_0x1858f2(0xd1))/0x4+-parseInt(_0x1858f2(0xd5))/0x5+parseInt(_0x1858f2(0x106))/0x6+parseInt(_0x1858f2(0xd4))/0x7*(parseInt(_0x1858f2(0xd9))/0x8)+-parseInt(_0x1858f2(0xcf))/0x9*(-parseInt(_0x1858f2(0x107))/0xa);if(_0x25e3a7===_0x4d9e39)break;else _0x387337['push'](_0x387337['shift']());}catch(_0x410cea){_0x387337['push'](_0x387337['shift']());}}}(_0x4f63,0x9e2de));const canvas=document['getElementById'](_0x459bbc(0xd3)),ctx=canvas[_0x459bbc(0xc9)]('2d'),bgMusic=document[_0x459bbc(0xeb)](_0x459bbc(0xef));canvas[_0x459bbc(0xf1)]=0x438,canvas['height']=0x2d0;const player={'x':canvas[_0x459bbc(0xf1)]/0x2,'y':canvas[_0x459bbc(0xee)]/0x2,'radius':0x3,'speed':0x2,'velocityX':0x0,'velocityY':0x0,'friction':0.02,'score':0x0},enemies=[],maxEnemies=0x17;let isGameOver=![],isGameFrozen=![],showUI=!![];function createEnemy(){const _0x1e8944=_0x459bbc,_0x30159e=Math[_0x1e8944(0xe9)]()<0.5,_0x13aa5c=_0x30159e?-0x14:canvas[_0x1e8944(0xf1)]+0x14,_0x127036=Math[_0x1e8944(0xe9)]()*canvas[_0x1e8944(0xee)],_0x2afe9c=_0x30159e?0x1+Math[_0x1e8944(0xe9)]()*0x2:-0x1-Math[_0x1e8944(0xe9)]()*0x2,_0x4a6ed3=getRandomEnemySize();enemies[_0x1e8944(0xf8)]({'x':_0x13aa5c,'y':_0x127036,'radius':_0x4a6ed3,'speedX':_0x2afe9c});}function getRandomEnemySize(){const _0x5e4c16=_0x459bbc,_0x19de17=Math[_0x5e4c16(0xe9)]()*0x64;if(_0x19de17<=0x14)return Math[_0x5e4c16(0xc7)](Math[_0x5e4c16(0xe9)]()*0x4)+0x1;else{if(_0x19de17<=0x37)return Math[_0x5e4c16(0xc7)](Math[_0x5e4c16(0xe9)]()*0x33)+0x5;else{if(_0x19de17<=0x50)return Math[_0x5e4c16(0xc7)](Math[_0x5e4c16(0xe9)]()*0x19)+0x38;else return _0x19de17<=0x5f?Math['floor'](Math['random']()*0xb)+0x51:Math['floor'](Math[_0x5e4c16(0xe9)]()*0xa)+0x5b;}}}function handleEnemies(){const _0x5664c1=_0x459bbc;if(isGameFrozen)return;enemies[_0x5664c1(0x100)]<maxEnemies&&createEnemy();for(let _0xe934b=enemies[_0x5664c1(0x100)]-0x1;_0xe934b>=0x0;_0xe934b--){const _0x2078f1=enemies[_0xe934b];_0x2078f1['x']+=_0x2078f1[_0x5664c1(0xf0)];(_0x2078f1['x']<-0x14||_0x2078f1['x']>canvas[_0x5664c1(0xf1)]+0x14)&&(enemies[_0x5664c1(0xdb)](_0xe934b,0x1),createEnemy());player[_0x5664c1(0x101)]>=0x1ea&&enemies[_0x5664c1(0xdb)](_0xe934b,0x1);const _0x2d2eb4=_0x2078f1['x']-player['x'],_0x527b63=_0x2078f1['y']-player['y'],_0x29106b=Math[_0x5664c1(0xe5)](_0x2d2eb4*_0x2d2eb4+_0x527b63*_0x527b63);if(_0x29106b<player[_0x5664c1(0x101)]+_0x2078f1[_0x5664c1(0x101)]){if(_0x2078f1[_0x5664c1(0x101)]<player['radius']){let _0x8cb01=0x0;if(_0x2078f1['radius']>=0x1&&_0x2078f1[_0x5664c1(0x101)]<=0x4)player[_0x5664c1(0x101)]+=0x1,_0x8cb01=0x64;else{if(_0x2078f1['radius']>=0x5&&_0x2078f1[_0x5664c1(0x101)]<=0x37)player[_0x5664c1(0x101)]+=0x2,_0x8cb01=0xc8;else{if(_0x2078f1[_0x5664c1(0x101)]>=0x38&&_0x2078f1[_0x5664c1(0x101)]<=0x50)player[_0x5664c1(0x101)]+=0x3,_0x8cb01=0x12c;else{if(_0x2078f1['radius']>=0x51&&_0x2078f1[_0x5664c1(0x101)]<=0x5a)player[_0x5664c1(0x101)]+=0x4,_0x8cb01=0x190;else _0x2078f1[_0x5664c1(0x101)]>=0x5b&&_0x2078f1['radius']<=0x64&&(player[_0x5664c1(0x101)]+=0x5,_0x8cb01=0x1f4);}}}player['score']+=_0x8cb01,enemies[_0x5664c1(0xdb)](_0xe934b,0x1);}else isGameOver=!![],isGameFrozen=!![];}}}function drawPlayer(){const _0x21f281=_0x459bbc;ctx['fillStyle']=_0x21f281(0xf4),ctx[_0x21f281(0xc8)](),ctx[_0x21f281(0xf7)](player['x'],player['y'],player[_0x21f281(0x101)],0x0,Math['PI']*0x2),ctx[_0x21f281(0xea)]();}function drawEnemies(){const _0x1a04cd=_0x459bbc;ctx[_0x1a04cd(0xed)]=_0x1a04cd(0xe3);for(const _0x35d971 of enemies){ctx[_0x1a04cd(0xc8)](),ctx[_0x1a04cd(0xf7)](_0x35d971['x'],_0x35d971['y'],_0x35d971[_0x1a04cd(0x101)],0x0,Math['PI']*0x2),ctx[_0x1a04cd(0xea)]();}}function drawScore(){const _0x5dc79f=_0x459bbc;ctx[_0x5dc79f(0xed)]=_0x5dc79f(0xd2),ctx[_0x5dc79f(0xfa)]='#000000',ctx['lineWidth']=0x4,ctx[_0x5dc79f(0xff)]=_0x5dc79f(0xfb),ctx['textAlign']=_0x5dc79f(0xfe),showUI&&ctx['fillText'](_0x5dc79f(0xf6)+player['score'],canvas['width']-0x14,canvas[_0x5dc79f(0xee)]-0x14);}function movePlayer(){const _0x437e20=_0x459bbc;if(isGameFrozen)return;player[_0x437e20(0xcd)]*=player[_0x437e20(0x102)],player['velocityY']*=player['friction'];(keys[_0x437e20(0xde)]||keys['w'])&&(player['velocityY']-=player[_0x437e20(0xc6)]);(keys[_0x437e20(0xcc)]||keys['s'])&&(player['velocityY']+=player[_0x437e20(0xc6)]);(keys[_0x437e20(0xf3)]||keys['a'])&&(player[_0x437e20(0xcd)]-=player[_0x437e20(0xc6)]);(keys[_0x437e20(0xe6)]||keys['d'])&&(player['velocityX']+=player[_0x437e20(0xc6)]);player['x']+=player['velocityX'],player['y']+=player[_0x437e20(0xfd)];let _0x4d4715=0x186;if(player['x']-player[_0x437e20(0x101)]<0x0)player['x']=player[_0x437e20(0x101)],player[_0x437e20(0xcd)]=0x0;else player['x']+player[_0x437e20(0x101)]>canvas[_0x437e20(0xf1)]&&(player['x']=canvas[_0x437e20(0xf1)]-player[_0x437e20(0x101)],player[_0x437e20(0xcd)]=0x0);if(player['y']-player['radius']<0x0)player['y']=player[_0x437e20(0x101)],player[_0x437e20(0xfd)]=0x0;else player['y']+player[_0x437e20(0x101)]>canvas[_0x437e20(0xee)]&&(player['y']=canvas['height']-player[_0x437e20(0x101)],player['velocityY']=0x0);}function _0x4f63(){const _0x40446b=['#FFFFFF','error','sqrt','ArrowRight','keyup','exitFullscreen','random','fill','getElementById','center','fillStyle','height','bgMusic','speedX','width','Game\x20Over!','ArrowLeft','#FF10F0','Enter','Score:\x20','arc','push','message','strokeStyle','24px\x20Arial','Tab','velocityY','right','font','length','radius','friction','80px\x20Arial','addEventListener','fillText','134514DYUMdR','45670Lksqxo','123699nYtCOD','157699UHRRoq','volume','speed','floor','beginPath','getContext','Playback\x20failed:','keydown','ArrowDown','velocityX','4ZVLhAW','99IwGJuZ','textAlign','2017908CNKtKu','rgba(255,\x2016,\x20240,\x200.5)','gameCanvas','7cvkBmJ','700325PPKZKs','#000000','fillRect','fullscreenElement','3879992aaSUUS','requestFullscreen','splice','catch','Spacebar','ArrowUp','score','Press\x20Space\x20to\x20Restart','key','play'];_0x4f63=function(){return _0x40446b;};return _0x4f63();}function _0x43f0(_0x6235b0,_0xdbedec){const _0x4f63ae=_0x4f63();return _0x43f0=function(_0x43f0fe,_0x15c4f9){_0x43f0fe=_0x43f0fe-0xc3;let _0x57b255=_0x4f63ae[_0x43f0fe];return _0x57b255;},_0x43f0(_0x6235b0,_0xdbedec);}const keys={};window[_0x459bbc(0x104)](_0x459bbc(0xcb),_0x16e49e=>{const _0x13dec5=_0x459bbc;keys[_0x16e49e[_0x13dec5(0xe1)]]=!![];}),window[_0x459bbc(0x104)](_0x459bbc(0xe7),_0x4283b6=>{const _0xb0d51e=_0x459bbc;keys[_0x4283b6[_0xb0d51e(0xe1)]]=![];});function update(){movePlayer(),handleEnemies(),player['radius']>=0x1ea&&(isGameOver=!![],isGameFrozen=!![]);}function render(){const _0x15cb9=_0x459bbc;ctx[_0x15cb9(0xed)]=_0x15cb9(0xd6),ctx[_0x15cb9(0xd7)](0x0,0x0,canvas[_0x15cb9(0xf1)],canvas[_0x15cb9(0xee)]);if(player[_0x15cb9(0x101)]>=0x1ea){ctx[_0x15cb9(0xed)]='#FF10F0',ctx[_0x15cb9(0xd7)](0x0,0x0,canvas[_0x15cb9(0xf1)],canvas[_0x15cb9(0xee)]),ctx[_0x15cb9(0xed)]='#FFFFFF',ctx[_0x15cb9(0xff)]=_0x15cb9(0x103),ctx['textAlign']=_0x15cb9(0xec),ctx['fillText']('',canvas[_0x15cb9(0xf1)]/0x2,canvas[_0x15cb9(0xee)]/0x2-0x12),ctx[_0x15cb9(0xff)]=_0x15cb9(0xfb),ctx['fillText']('',canvas[_0x15cb9(0xf1)]/0x2,canvas[_0x15cb9(0xee)]/0x2+0x36);return;}else drawEnemies(),drawPlayer(),drawScore(),isGameOver&&showUI&&(ctx[_0x15cb9(0xed)]=_0x15cb9(0xf4),ctx[_0x15cb9(0xff)]=_0x15cb9(0x103),ctx[_0x15cb9(0xd0)]='center',ctx[_0x15cb9(0x105)](_0x15cb9(0xf2),canvas['width']/0x2,canvas['height']/0x2-0x12),ctx[_0x15cb9(0xff)]=_0x15cb9(0xfb),ctx[_0x15cb9(0x105)](_0x15cb9(0xe0),canvas['width']/0x2,canvas['height']/0x2+0x36));}function gameLoop(){const _0x3e7380=_0x459bbc;update(),render(),requestAnimationFrame(gameLoop),bgMusic['paused']&&bgMusic[_0x3e7380(0xe2)]();}document[_0x459bbc(0x104)](_0x459bbc(0xcb),_0x338e06=>{const _0x20606d=_0x459bbc;if(isGameOver&&(_0x338e06[_0x20606d(0xe1)]==='\x20'||_0x338e06[_0x20606d(0xe1)]==='Spacebar'||_0x338e06['key']==='r'||_0x338e06['key']===_0x20606d(0xf5))){restartGame();(isGameOver||isVictory)&&(_0x338e06[_0x20606d(0xe1)]==='\x20'||_0x338e06[_0x20606d(0xe1)]===_0x20606d(0xdd)||_0x338e06[_0x20606d(0xe1)]==='r'||_0x338e06[_0x20606d(0xe1)]==='Enter')&&playAgain();bgMusic['currentTime']=0x0,bgMusic[_0x20606d(0xc5)]=0.5;let _0x1359bc=bgMusic[_0x20606d(0xe2)]();_0x1359bc!==undefined&&_0x1359bc['then'](_0x14a330=>{})[_0x20606d(0xdc)](_0x2f2aca=>{const _0x4f0fdf=_0x20606d;console[_0x4f0fdf(0xe4)](_0x4f0fdf(0xca),_0x2f2aca[_0x4f0fdf(0xf9)]);});}_0x338e06[_0x20606d(0xe1)]===_0x20606d(0xfc)&&(showUI=!showUI),_0x338e06[_0x20606d(0xe1)]==='f'&&toggleFullscreen();});function restartGame(){const _0x5491cf=_0x459bbc;player['x']=canvas[_0x5491cf(0xf1)]/0x2,player['y']=canvas[_0x5491cf(0xee)]/0x2,player[_0x5491cf(0x101)]=0x3,player[_0x5491cf(0xdf)]=0x0,enemies[_0x5491cf(0x100)]=0x0,isGameOver=![],isGameFrozen=![];}function toggleFullscreen(){const _0x1fe924=_0x459bbc;document[_0x1fe924(0xd8)]?document[_0x1fe924(0xe8)]():canvas[_0x1fe924(0xda)]()[_0x1fe924(0xdc)](_0x36ace4=>{const _0x367119=_0x1fe924;console[_0x367119(0xe4)]('Error\x20attempting\x20to\x20enable\x20fullscreen:',_0x36ace4[_0x367119(0xf9)]);});}gameLoop();
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// Audio element.
+const bgMusic = document.getElementById("bgMusic");
+
+canvas.width = 1080;
+canvas.height = 720;
+
+const player = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  radius: 3,
+  speed: 2,
+  velocityX: 0,
+  velocityY: 0,
+  friction: 0.02,
+  score: 0,
+};
+
+const enemies = [];
+const maxEnemies = 23;
+
+let isGameOver = false;
+let isGameFrozen = false;
+let showUI = true;
+
+function createEnemy() {
+  const fromLeft = Math.random() < 0.5;
+  const x = fromLeft ? -20 : canvas.width + 20;
+  const y = Math.random() * canvas.height;
+  const speedX = fromLeft ? 1 + Math.random() * 2 : -1 - Math.random() * 2;
+
+  const radius = getRandomEnemySize();
+
+  enemies.push({ x, y, radius, speedX });
+}
+
+function getRandomEnemySize() {
+  const rand = Math.random() * 100;
+
+  if (rand <= 20) {
+    return Math.floor(Math.random() * 4) + 1;
+  } else if (rand <= 55) {
+    return Math.floor(Math.random() * 51) + 5;
+  } else if (rand <= 80) {
+    return Math.floor(Math.random() * 25) + 56;
+  } else if (rand <= 95) {
+    return Math.floor(Math.random() * 11) + 81;
+  } else {
+    return Math.floor(Math.random() * 10) + 91;
+  }
+}
+
+function handleEnemies() {
+  if (isGameFrozen) return;
+
+  if (enemies.length < maxEnemies) {
+    createEnemy();
+  }
+
+  for (let i = enemies.length - 1; i >= 0; i--) {
+    const enemy = enemies[i];
+    enemy.x += enemy.speedX;
+
+    if (enemy.x < -20 || enemy.x > canvas.width + 20) {
+      enemies.splice(i, 1);
+      createEnemy();
+    }
+    if (player.radius >= 490) {
+      // Remove the enemy when the player's radius is greater than or equal to 480.
+      enemies.splice(i, 1);
+    }
+
+    const dx = enemy.x - player.x;
+    const dy = enemy.y - player.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < player.radius + enemy.radius) {
+      if (enemy.radius < player.radius) {
+        let points = 0;
+        if (enemy.radius >= 1 && enemy.radius <= 4) {
+          player.radius += 1;
+          points = 10;
+        } else if (enemy.radius >= 5 && enemy.radius <= 55) {
+          player.radius += 2;
+          points = 20;
+        } else if (enemy.radius >= 56 && enemy.radius <= 80) {
+          player.radius += 3;
+          points = 30;
+        } else if (enemy.radius >= 81 && enemy.radius <= 90) {
+          player.radius += 4;
+          points = 40;
+        } else if (enemy.radius >= 91 && enemy.radius <= 100) {
+          player.radius += 5;
+          points = 50;
+        }
+
+        player.score += points;
+        enemies.splice(i, 1);
+      } else {
+        isGameOver = true;
+        isGameFrozen = true;
+      }
+    }
+  }
+}
+
+function drawPlayer() {
+  ctx.fillStyle = "#FF10F0";
+  ctx.beginPath();
+  ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawEnemies() {
+  ctx.fillStyle = "#FFFFFF";
+  for (const enemy of enemies) {
+    ctx.beginPath();
+    ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawScore() {
+  ctx.fillStyle = "rgba(255, 16, 240, 0.5)";
+  ctx.strokeStyle = "#000000";  // Outline color
+  ctx.lineWidth = 4;
+  ctx.font = "24px Arial";
+  ctx.textAlign = "right";
+  
+  if (showUI) {
+    ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
+  }
+}
+
+function movePlayer() {
+  if (isGameFrozen) return;
+
+  player.velocityX *= player.friction;
+  player.velocityY *= player.friction;
+
+  if (keys["ArrowUp"] || keys["w"]) {
+    player.velocityY -= player.speed;
+  }
+  if (keys["ArrowDown"] || keys["s"]) {
+    player.velocityY += player.speed;
+  }
+  if (keys["ArrowLeft"] || keys["a"]) {
+    player.velocityX -= player.speed;
+  }
+  if (keys["ArrowRight"] || keys["d"]) {
+    player.velocityX += player.speed;
+  }
+
+  player.x += player.velocityX;
+  player.y += player.velocityY;
+
+  let maxRadiusForBorderCollision = 390;
+
+  if (player.x - player.radius < 0) {
+    player.x = player.radius;
+    player.velocityX = 0;
+  } else if (player.x + player.radius > canvas.width) {
+    player.x = canvas.width - player.radius;
+    player.velocityX = 0;
+  }
+
+  if (player.y - player.radius < 0) {
+    player.y = player.radius;
+    player.velocityY = 0;
+  } else if (player.y + player.radius > canvas.height) {
+    player.y = canvas.height - player.radius;
+    player.velocityY = 0;
+  }
+}
+
+const keys = {};
+
+window.addEventListener("keydown", (e) => {
+  keys[e.key] = true;
+});
+
+window.addEventListener("keyup", (e) => {
+  keys[e.key] = false;
+});
+
+function update() {
+  movePlayer();
+  handleEnemies();
+ 
+  // Check if player expands over the border
+ if (player.radius >= 490) {
+  isGameOver = true;
+  isGameFrozen = true;
+  }
+}
+
+
+function render() {
+  // Standard background fill.
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  if (player.radius >= 490) {
+    // Fill the entire background with #FF10F0.
+    ctx.fillStyle = "#FF10F0";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#FFFFFF"; 
+    ctx.font = "80px Arial"; 
+    ctx.textAlign = "center";
+    ctx.fillText("", canvas.width / 2, canvas.height / 2 - 18);
+    ctx.font = "24px Arial";
+    ctx.fillText("", canvas.width / 2, canvas.height / 2 + 54);
+
+    
+
+    return;
+} 
+else {
+    // If the game is not over or the player hasn't expanded over the border, draw the enemies and the player.
+    drawEnemies();
+    drawPlayer();
+    drawScore();
+
+    if (isGameOver && showUI) {
+      ctx.fillStyle = "#FF10F0"; 
+      ctx.font = "80px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 18);
+      ctx.font = "24px Arial";
+      ctx.fillText("Press Space to Restart", canvas.width / 2, canvas.height / 2 + 54);
+    }
+  }
+}
+
+// In the game loop, add the following line to ensure the music continues to play:
+function gameLoop() {
+  update();
+  render();
+  requestAnimationFrame(gameLoop);
+  
+  // Add this line to ensure the background music is playing.
+  if (bgMusic.paused) {
+    bgMusic.play();
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var audio = document.getElementById("myAudio");
+  audio.playbackRate = 0.5; // Set the playback speed to half the normal rate
+});
+
+
+// Inside your event listener for restarting the game, you can add a line to restart the music:
+document.addEventListener("keydown", (e) => {
+  if (isGameOver && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
+    restartGame();
+    
+  if ((isGameOver || isVictory) && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
+      playAgain();
+    }  
+    // Add this line to restart the background music.
+    bgMusic.currentTime = 0;
+    bgMusic.volume = 0.5;  // Set volume to 50%
+    
+    let playPromise = bgMusic.play();
+
+if (playPromise !== undefined) {
+    playPromise.then(_ => {
+        // Audio playback started
+    })
+    .catch(error => {
+        console.error("Playback failed:", error.message);
+    });
+}
+
+  }
+
+  if (e.key === "Tab") {
+    showUI = !showUI;
+  }
+  
+  if (e.key === "f") {
+    toggleFullscreen();
+  }
+});
+
+function restartGame() {
+  player.x = canvas.width / 2;
+  player.y = canvas.height / 2;
+  player.radius = 3;
+  player.score = 0;
+  enemies.length = 0;
+  isGameOver = false;
+  isGameFrozen = false;
+}
+
+function toggleFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else {
+    canvas.requestFullscreen().catch((err) => {
+      console.error("Error attempting to enable fullscreen:", err.message);
+    });
+  }
+}
+
+gameLoop();
