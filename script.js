@@ -26,6 +26,23 @@ let isGameFrozen = false;
 let showUI = true;
 let isMenuActive = true; // Add this to the beginning of your code
 let isMusicMuted = false;
+document.addEventListener('keydown', function(event) {
+  // Check if the pressed key is "M" or "m"
+  if (event.key === 'M' || event.key === 'm') {
+      toggleMusicMute();
+  }
+});
+function toggleMusicMute() {
+  if (isMusicMuted) {
+      // Unmute the music
+      bgMusic.volume = 0.5;  // Or whatever volume you had before muting
+      isMusicMuted = false;
+  } else {
+      // Mute the music
+      bgMusic.volume = 0.0;
+      isMusicMuted = true;
+  }
+}
 
 function handleKeyPress(e) {
   if (e.key === "m" || e.key === "m") {
@@ -418,5 +435,20 @@ function toggleFullscreen() {
     });
   }
 }
+function checkCollisions() {
+  // ... any other collision checks ...
 
+  if (collidedWithBiggerEnemy) {
+      collisionSound.currentTime = 0; // reset sound to start
+      collisionSound.play();
+  }
+}
+function checkCollisions() {
+  // ... any other collision checks ...
+
+  if (collidedWithBiggerEnemy) {
+      collisionSound.currentTime = 0; // reset sound to start
+      collisionSound.play();
+  }
+}
 gameLoop();
