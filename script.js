@@ -17,7 +17,6 @@ const player = {
   friction: 0.02,
   score: 0,
 };
-
 const enemies = [];
 const maxEnemies = 23;
 
@@ -35,7 +34,6 @@ function createEnemy() {
 
   enemies.push({ x, y, radius, speedX });
 }
-
 function getRandomEnemySize() {
   const rand = Math.random() * 100;
 
@@ -51,7 +49,6 @@ function getRandomEnemySize() {
     return Math.floor(Math.random() * 10) + 91;
   }
 }
-
 function handleEnemies() {
   if (isGameFrozen) return;
 
@@ -105,14 +102,12 @@ function handleEnemies() {
     }
   }
 }
-
 function drawPlayer() {
   ctx.fillStyle = "#FF10F0";
   ctx.beginPath();
   ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
   ctx.fill();
 }
-
 function drawEnemies() {
   ctx.fillStyle = "#FFFFFF";
   for (const enemy of enemies) {
@@ -121,7 +116,6 @@ function drawEnemies() {
     ctx.fill();
   }
 }
-
 function drawScore() {
   ctx.fillStyle = "rgba(255, 16, 240, 0.5)";
   ctx.strokeStyle = "#000000";  // Outline color
@@ -133,7 +127,6 @@ function drawScore() {
     ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
   }
 }
-
 function movePlayer() {
   if (isGameFrozen) return;
 
@@ -174,7 +167,6 @@ function movePlayer() {
     player.velocityY = 0;
   }
 }
-
 const keys = {};
 
 window.addEventListener("keydown", (e) => {
@@ -246,7 +238,6 @@ function gameLoop() {
     bgMusic.play();
   }
 }
-
 // Inside your event listener for restarting the game, you can add a line to restart the music:
 document.addEventListener("keydown", (e) => {
   if (isGameOver && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
@@ -267,7 +258,6 @@ document.addEventListener("keydown", (e) => {
     toggleFullscreen();
   }
 });
-
 function restartGame() {
   player.x = canvas.width / 2;
   player.y = canvas.height / 2;
@@ -277,7 +267,6 @@ function restartGame() {
   isGameOver = false;
   isGameFrozen = false;
 }
-
 function toggleFullscreen() {
   if (document.fullscreenElement) {
     document.exitFullscreen();
@@ -287,5 +276,4 @@ function toggleFullscreen() {
     });
   }
 }
-
 gameLoop();
