@@ -303,12 +303,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener("keydown", (e) => {
   if (isMenuActive) {
-    if (e.key === "ArrowUp", "w") {
+    if (e.key === "ArrowUp") {
       selectedItemIndex--;
       if (selectedItemIndex < 0) {
         selectedItemIndex = menuItems.length - 1; // wrap around to the last item
       }
-    } else if (e.key === "ArrowDown", "s") {
+    } else if (e.key === "ArrowDown") {
       selectedItemIndex++;
       if (selectedItemIndex >= menuItems.length) {
         selectedItemIndex = 0; // wrap around to the first item
@@ -344,21 +344,10 @@ document.addEventListener("keydown", (e) => {
   if ((isGameOver || isVictory) && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
       playAgain();
     }  
-    
     // Add this line to restart the background music.
-    let isMusicMuted = false;
-    
-    function handleKeyPress(e) {
-      if (e.key === "m" || e.key === "M") {
-        isMusicMuted = !isMusicMuted;  // Toggle the music state.
-        toggleMusic();
-      }
-      // ... (other key handling code)
-    }
-    
     bgMusic.currentTime = 0;
     bgMusic.volume = 0.5;  // Set volume to 50%
-    bgMusic.playbackRate = 0.6;
+    bgMusic.playbackrate =0.6
     let playPromise = bgMusic.play();
 
 if (playPromise !== undefined) {
@@ -402,4 +391,3 @@ function toggleFullscreen() {
 }
 
 gameLoop();
-console.log("ficker.eth");
