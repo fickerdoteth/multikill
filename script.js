@@ -344,8 +344,37 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 }
-
 );
+let keysPressed = {};
+
+// Listen for keydown events
+document.addEventListener('keydown', function(event) {
+    keysPressed[event.key] = true;
+    checkForArrowDownAndS();
+});
+
+// Listen for keyup events
+document.addEventListener('keyup', function(event) {
+    delete keysPressed[event.key];
+});
+
+function checkForArrowDownAndS() {
+    if (keysPressed['ArrowDown'] && keysPressed['s']) {
+        displayPNG();
+    }
+}
+
+function displayPNG() {
+    // Assuming you have an <img> element in your HTML with id 'myImage'
+    let imgElement = document.getElementById('myImage');
+    
+    // Set the source of the image element to your PNG file's path
+    imgElement.src = '1409.png';
+    
+    // Make the image visible
+    imgElement.style.display = 'block';
+}
+
 
 document.addEventListener("keydown", (e) => {
   if (isMenuActive) {
