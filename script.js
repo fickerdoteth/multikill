@@ -1,2 +1,486 @@
-const _0x11efb1=_0x13aa;(function(_0x3fd255,_0x48bda3){const _0x4cb938=_0x13aa,_0x56d64d=_0x3fd255();while(!![]){try{const _0x4905c9=parseInt(_0x4cb938(0x147))/0x1+parseInt(_0x4cb938(0x144))/0x2*(-parseInt(_0x4cb938(0x16f))/0x3)+parseInt(_0x4cb938(0x130))/0x4+parseInt(_0x4cb938(0x16a))/0x5+parseInt(_0x4cb938(0x132))/0x6+parseInt(_0x4cb938(0x14a))/0x7*(-parseInt(_0x4cb938(0x177))/0x8)+-parseInt(_0x4cb938(0x162))/0x9*(parseInt(_0x4cb938(0x12e))/0xa);if(_0x4905c9===_0x48bda3)break;else _0x56d64d['push'](_0x56d64d['shift']());}catch(_0x3adf1d){_0x56d64d['push'](_0x56d64d['shift']());}}}(_0x4777,0x9747b));const canvas=document['getElementById']('gameCanvas'),ctx=canvas[_0x11efb1(0x163)]('2d'),bgMusic=document['getElementById'](_0x11efb1(0x153));canvas[_0x11efb1(0x12a)]=0x438,canvas['height']=0x2d0;const player={'x':canvas['width']/0x2,'y':canvas['height']/0x2,'radius':0x3,'speed':0x2,'velocityX':0x0,'velocityY':0x0,'friction':0.02,'score':0x0},enemies=[],maxEnemies=0x12;let isGameOver=![],isGameFrozen=![],showUI=!![],isMenuActive=!![],isMusicMuted=![];document['addEventListener'](_0x11efb1(0x14f),function(_0x1d5243){const _0x2296c8=_0x11efb1;(_0x1d5243['key']==='M'||_0x1d5243[_0x2296c8(0x126)]==='m')&&toggleMusicMute();});function toggleMusicMute(){isMusicMuted?(bgMusic['volume']=0.5,isMusicMuted=![]):(bgMusic['volume']=0x0,isMusicMuted=!![]);}function handleKeyPress(_0x46aead){const _0x492394=_0x11efb1;(_0x46aead[_0x492394(0x126)]==='m'||_0x46aead[_0x492394(0x126)]==='m')&&(isMusicMuted=!isMusicMuted,toggleMusic());}function toggleMusic(){const _0x317f73=_0x11efb1;isMusicMuted?yourMusicObject[_0x317f73(0x14b)]=0x0:yourMusicObject[_0x317f73(0x14b)]=0x1;}function render(){const _0x208621=_0x11efb1;isMusicMuted&&(ctx[_0x208621(0x13c)]='16px\x20Arial',ctx[_0x208621(0x14d)]=_0x208621(0x15a),ctx[_0x208621(0x171)](_0x208621(0x15c),0xa,canvas[_0x208621(0x13a)]-0xa));}canvas[_0x11efb1(0x174)]('keydown',handleKeyPress);function createEnemy(){const _0x548d72=_0x11efb1,_0x1421af=Math[_0x548d72(0x178)]()<0.5,_0x299952=_0x1421af?-0x14:canvas[_0x548d72(0x12a)]+0x14,_0x115b44=Math[_0x548d72(0x178)]()*canvas[_0x548d72(0x13a)],_0x3f6118=_0x1421af?0x1+Math['random']()*0x2:-0x1-Math[_0x548d72(0x178)]()*0x2,_0xaf8572=getRandomEnemySize();enemies['push']({'x':_0x299952,'y':_0x115b44,'radius':_0xaf8572,'speedX':_0x3f6118});}function getRandomEnemySize(){const _0x1eebe4=_0x11efb1,_0x402760=Math[_0x1eebe4(0x178)]()*0x64;if(_0x402760<=0x14)return Math['floor'](Math[_0x1eebe4(0x178)]()*0x4)+0x1;else{if(_0x402760<=0x37)return Math[_0x1eebe4(0x164)](Math[_0x1eebe4(0x178)]()*0x33)+0x5;else{if(_0x402760<=0x50)return Math[_0x1eebe4(0x164)](Math[_0x1eebe4(0x178)]()*0x19)+0x38;else return _0x402760<=0x5f?Math[_0x1eebe4(0x164)](Math[_0x1eebe4(0x178)]()*0xb)+0x51:Math[_0x1eebe4(0x164)](Math[_0x1eebe4(0x178)]()*0xa)+0x5b;}}}function handleEnemies(){const _0x2ed6e0=_0x11efb1;if(isGameFrozen)return;enemies[_0x2ed6e0(0x13d)]<maxEnemies&&createEnemy();for(let _0x258840=enemies['length']-0x1;_0x258840>=0x0;_0x258840--){const _0x50e67e=enemies[_0x258840];_0x50e67e['x']+=_0x50e67e[_0x2ed6e0(0x159)];(_0x50e67e['x']<-0x14||_0x50e67e['x']>canvas['width']+0x14)&&(enemies[_0x2ed6e0(0x120)](_0x258840,0x1),createEnemy());player['radius']>=0x1ea&&enemies[_0x2ed6e0(0x120)](_0x258840,0x1);const _0x13c007=_0x50e67e['x']-player['x'],_0x25b959=_0x50e67e['y']-player['y'],_0xa57ea4=Math[_0x2ed6e0(0x127)](_0x13c007*_0x13c007+_0x25b959*_0x25b959);if(_0xa57ea4<player[_0x2ed6e0(0x160)]+_0x50e67e[_0x2ed6e0(0x160)]){if(_0x50e67e[_0x2ed6e0(0x160)]<player[_0x2ed6e0(0x160)]){let _0xfd19df=0x0;if(_0x50e67e[_0x2ed6e0(0x160)]>=0x1&&_0x50e67e[_0x2ed6e0(0x160)]<=0x4)player[_0x2ed6e0(0x160)]+=0x1,_0xfd19df=0xa;else{if(_0x50e67e[_0x2ed6e0(0x160)]>=0x5&&_0x50e67e['radius']<=0x37)player[_0x2ed6e0(0x160)]+=0x2,_0xfd19df=0x14;else{if(_0x50e67e[_0x2ed6e0(0x160)]>=0x38&&_0x50e67e[_0x2ed6e0(0x160)]<=0x50)player[_0x2ed6e0(0x160)]+=0x3,_0xfd19df=0x1e;else{if(_0x50e67e['radius']>=0x51&&_0x50e67e['radius']<=0x5a)player[_0x2ed6e0(0x160)]+=0x4,_0xfd19df=0x28;else _0x50e67e[_0x2ed6e0(0x160)]>=0x5b&&_0x50e67e['radius']<=0x64&&(player[_0x2ed6e0(0x160)]+=0x5,_0xfd19df=0x32);}}}player['score']+=_0xfd19df,enemies['splice'](_0x258840,0x1);}else isGameOver=!![],isGameFrozen=!![];}}}function drawPlayer(){const _0x5926b7=_0x11efb1;ctx[_0x5926b7(0x14d)]=_0x5926b7(0x16c),ctx[_0x5926b7(0x166)](),ctx[_0x5926b7(0x142)](player['x'],player['y'],player[_0x5926b7(0x160)],0x0,Math['PI']*0x2),ctx['fill']();}function drawEnemies(){const _0x44a1d4=_0x11efb1;ctx[_0x44a1d4(0x14d)]='#FFFFFF';for(const _0x98d543 of enemies){ctx[_0x44a1d4(0x166)](),ctx[_0x44a1d4(0x142)](_0x98d543['x'],_0x98d543['y'],_0x98d543[_0x44a1d4(0x160)],0x0,Math['PI']*0x2),ctx[_0x44a1d4(0x14e)]();}}function drawScore(){const _0x3c08d4=_0x11efb1;ctx[_0x3c08d4(0x14d)]=_0x3c08d4(0x125),ctx['strokeStyle']=_0x3c08d4(0x13b),ctx['lineWidth']=0x4,ctx[_0x3c08d4(0x13c)]=_0x3c08d4(0x139),ctx[_0x3c08d4(0x124)]=_0x3c08d4(0x136),showUI&&ctx[_0x3c08d4(0x171)]('Score:\x20'+player[_0x3c08d4(0x12f)],canvas[_0x3c08d4(0x12a)]-0x14,canvas[_0x3c08d4(0x13a)]-0x14);}function movePlayer(){const _0x120041=_0x11efb1;if(isGameFrozen)return;player[_0x120041(0x128)]*=player[_0x120041(0x175)],player[_0x120041(0x135)]*=player[_0x120041(0x175)];(keys['ArrowUp']||keys['w'])&&(player[_0x120041(0x135)]-=player[_0x120041(0x16d)]);(keys[_0x120041(0x151)]||keys['s'])&&(player[_0x120041(0x135)]+=player[_0x120041(0x16d)]);(keys[_0x120041(0x150)]||keys['a'])&&(player[_0x120041(0x128)]-=player[_0x120041(0x16d)]);(keys['ArrowRight']||keys['d'])&&(player[_0x120041(0x128)]+=player[_0x120041(0x16d)]);player['x']+=player[_0x120041(0x128)],player['y']+=player[_0x120041(0x135)];let _0x10ab72=0x186;if(player['x']-player[_0x120041(0x160)]<0x0)player['x']=player[_0x120041(0x160)],player['velocityX']=0x0;else player['x']+player[_0x120041(0x160)]>canvas['width']&&(player['x']=canvas['width']-player[_0x120041(0x160)],player['velocityX']=0x0);if(player['y']-player[_0x120041(0x160)]<0x0)player['y']=player['radius'],player[_0x120041(0x135)]=0x0;else player['y']+player['radius']>canvas[_0x120041(0x13a)]&&(player['y']=canvas[_0x120041(0x13a)]-player[_0x120041(0x160)],player['velocityY']=0x0);}const keys={};window['addEventListener'](_0x11efb1(0x14f),_0x628bc5=>{keys[_0x628bc5['key']]=!![];}),window[_0x11efb1(0x174)](_0x11efb1(0x145),_0x1b4c56=>{const _0x19a316=_0x11efb1;keys[_0x1b4c56[_0x19a316(0x126)]]=![];});function update(){const _0x139666=_0x11efb1;if(isMenuActive)return;movePlayer(),handleEnemies(),player[_0x139666(0x160)]>=0x1ea&&(isGameOver=!![],isGameFrozen=!![]);}const menuItems=[_0x11efb1(0x149),_0x11efb1(0x137),'Credits'];let selectedItemIndex=0x0;function render(){const _0x369b83=_0x11efb1;ctx['fillStyle']=_0x369b83(0x13b),ctx['fillRect'](0x0,0x0,canvas[_0x369b83(0x12a)],canvas[_0x369b83(0x13a)]);if(isMenuActive){ctx['fillStyle']=_0x369b83(0x16c),ctx[_0x369b83(0x13c)]=_0x369b83(0x170),ctx[_0x369b83(0x124)]=_0x369b83(0x16b),ctx[_0x369b83(0x171)](_0x369b83(0x143),canvas[_0x369b83(0x12a)]/0x2,canvas[_0x369b83(0x13a)]/0x2-0x32);for(let _0x1ad26a=0x0;_0x1ad26a<menuItems['length'];_0x1ad26a++){ctx[_0x369b83(0x13c)]=_0x369b83(0x172),_0x1ad26a===selectedItemIndex?ctx[_0x369b83(0x14d)]=_0x369b83(0x134):ctx['fillStyle']=_0x369b83(0x16c),ctx[_0x369b83(0x171)](menuItems[_0x1ad26a],canvas[_0x369b83(0x12a)]/0x2,canvas[_0x369b83(0x13a)]/0x2+0x2d+0x28*_0x1ad26a);}ctx['fillStyle']=_0x369b83(0x134),ctx[_0x369b83(0x13c)]=_0x369b83(0x139),ctx[_0x369b83(0x171)](_0x369b83(0x158),canvas['width']/0x2+0x12c,canvas['height']/0x2-0x14),ctx[_0x369b83(0x13c)]=_0x369b83(0x173),ctx[_0x369b83(0x171)](_0x369b83(0x154),canvas[_0x369b83(0x12a)]/0x2,canvas['height']/0x2+0x5a+0x48*menuItems[_0x369b83(0x13d)]);}else{if(player[_0x369b83(0x160)]>=0x1ea){ctx['fillStyle']=_0x369b83(0x16c),ctx[_0x369b83(0x155)](0x0,0x0,canvas[_0x369b83(0x12a)],canvas[_0x369b83(0x13a)]),ctx[_0x369b83(0x14d)]='#FFFFFF',ctx[_0x369b83(0x13c)]=_0x369b83(0x140),ctx['textAlign']=_0x369b83(0x16b),ctx[_0x369b83(0x171)]('',canvas[_0x369b83(0x12a)]/0x2,canvas[_0x369b83(0x13a)]/0x2-0x12),ctx['font']=_0x369b83(0x139),ctx[_0x369b83(0x171)]('',canvas[_0x369b83(0x12a)]/0x2,canvas['height']/0x2+0x36);return;}else drawEnemies(),drawPlayer(),drawScore(),isGameOver&&showUI&&(ctx[_0x369b83(0x14d)]=_0x369b83(0x16c),ctx[_0x369b83(0x13c)]=_0x369b83(0x140),ctx[_0x369b83(0x124)]=_0x369b83(0x16b),ctx['fillText'](_0x369b83(0x148),canvas[_0x369b83(0x12a)]/0x2,canvas[_0x369b83(0x13a)]/0x2-0x12),ctx['font']='24px\x20Arial',ctx[_0x369b83(0x171)](_0x369b83(0x146),canvas[_0x369b83(0x12a)]/0x2,canvas[_0x369b83(0x13a)]/0x2+0x36));}}function gameLoop(){const _0x506abc=_0x11efb1;update(),render(),requestAnimationFrame(gameLoop);if(isMenuActive){if(!bgMusic[_0x506abc(0x13e)])bgMusic[_0x506abc(0x15e)]();}else bgMusic[_0x506abc(0x13e)]&&bgMusic[_0x506abc(0x169)]();bgMusic[_0x506abc(0x13e)]&&bgMusic[_0x506abc(0x169)]();}document[_0x11efb1(0x174)](_0x11efb1(0x131),function(){const _0xe52674=_0x11efb1;var _0x235830=document[_0xe52674(0x15f)](_0xe52674(0x165));_0x235830[_0xe52674(0x141)]=0.5;let _0x19a4b2=bgMusic[_0xe52674(0x169)]();_0x19a4b2!==undefined&&_0x19a4b2[_0xe52674(0x15b)](_0x5e68d0=>{})[_0xe52674(0x121)](_0x5279a4=>{const _0x389ba7=_0xe52674;console[_0x389ba7(0x156)](_0x389ba7(0x123),_0x5279a4[_0x389ba7(0x13f)]);});});function _0x13aa(_0x57a990,_0x24424a){const _0x4777f6=_0x4777();return _0x13aa=function(_0x13aa8c,_0x4b2e4f){_0x13aa8c=_0x13aa8c-0x120;let _0x1de407=_0x4777f6[_0x13aa8c];return _0x1de407;},_0x13aa(_0x57a990,_0x24424a);}let keysPressed={};document[_0x11efb1(0x174)](_0x11efb1(0x14f),function(_0x1265b6){keysPressed[_0x1265b6['key']]=!![],checkForArrowDownAndS();}),document[_0x11efb1(0x174)](_0x11efb1(0x145),function(_0x14859b){const _0x4abad0=_0x11efb1;delete keysPressed[_0x14859b[_0x4abad0(0x126)]];});function checkForArrowDownAndS(){const _0x42fe95=_0x11efb1;keysPressed[_0x42fe95(0x151)]&&keysPressed['s']&&displayPNG();}function displayPNG(){const _0x438f8c=_0x11efb1;let _0x374337=document[_0x438f8c(0x15f)]('myImage');_0x374337[_0x438f8c(0x138)]=_0x438f8c(0x15d),_0x374337[_0x438f8c(0x152)]['display']=_0x438f8c(0x12b);}document[_0x11efb1(0x174)](_0x11efb1(0x14f),_0x3d60a0=>{const _0x555f2c=_0x11efb1;if(isMenuActive){if(_0x3d60a0['key']===_0x555f2c(0x16e))selectedItemIndex--,selectedItemIndex<0x0&&(selectedItemIndex=menuItems[_0x555f2c(0x13d)]-0x1);else{if(_0x3d60a0[_0x555f2c(0x126)]===_0x555f2c(0x151))selectedItemIndex++,selectedItemIndex>=menuItems[_0x555f2c(0x13d)]&&(selectedItemIndex=0x0);else{if(_0x3d60a0[_0x555f2c(0x126)]===_0x555f2c(0x176)||_0x3d60a0['key']==='Space')switch(menuItems[selectedItemIndex]){case'Play':isMenuActive=![];break;case _0x555f2c(0x129):break;case'Credits':break;default:console['error'](_0x555f2c(0x12d));}}}}if(isGameOver&&_0x3d60a0[_0x555f2c(0x126)]===_0x555f2c(0x167)){isMenuActive=!![];return;}}),document[_0x11efb1(0x174)](_0x11efb1(0x14f),_0x39d331=>{const _0x129504=_0x11efb1;if(isGameOver&&(_0x39d331['key']==='\x20'||_0x39d331[_0x129504(0x126)]==='Spacebar'||_0x39d331[_0x129504(0x126)]==='r'||_0x39d331[_0x129504(0x126)]===_0x129504(0x176))){restartGame();(isGameOver||isVictory)&&(_0x39d331[_0x129504(0x126)]==='\x20'||_0x39d331[_0x129504(0x126)]===_0x129504(0x122)||_0x39d331[_0x129504(0x126)]==='r'||_0x39d331['key']==='Enter')&&playAgain();bgMusic[_0x129504(0x157)]=0x0,bgMusic[_0x129504(0x14b)]=0.5,bgMusic[_0x129504(0x141)]=0.5;let _0x433bd2=bgMusic['play']();_0x433bd2!==undefined&&_0x433bd2['then'](_0x2d309a=>{})[_0x129504(0x121)](_0x2c3a9a=>{const _0x22f579=_0x129504;console['error'](_0x22f579(0x123),_0x2c3a9a[_0x22f579(0x13f)]);});}_0x39d331[_0x129504(0x126)]===_0x129504(0x168)&&(showUI=!showUI),_0x39d331['key']==='f'&&toggleFullscreen();});function restartGame(){const _0x447eca=_0x11efb1;player['x']=canvas['width']/0x2,player['y']=canvas['height']/0x2,player[_0x447eca(0x160)]=0x3,player['score']=0x0,enemies[_0x447eca(0x13d)]=0x0,isGameOver=![],isGameFrozen=![];}function toggleFullscreen(){const _0x2ced0e=_0x11efb1;document[_0x2ced0e(0x133)]?document[_0x2ced0e(0x161)]():canvas[_0x2ced0e(0x12c)]()[_0x2ced0e(0x121)](_0x5aca0e=>{const _0x16f2a7=_0x2ced0e;console[_0x16f2a7(0x156)](_0x16f2a7(0x14c),_0x5aca0e['message']);});}function checkCollisions(){const _0x2d1339=_0x11efb1;collidedWithBiggerEnemy&&(collisionSound[_0x2d1339(0x157)]=0x0,collisionSound[_0x2d1339(0x169)]());}function _0x4777(){const _0x345abc=['ArrowLeft','ArrowDown','style','bgMusic','2023','fillRect','error','currentTime','by\x20ficker.eth','speedX','white','then','Music:\x20Muted','1409.png','pause','getElementById','radius','exitFullscreen','3825mNWVzf','getContext','floor','myAudio','beginPath','Backspace','Tab','play','2027535jSIDWr','center','#FF10F0','speed','ArrowUp','211170xXrGjD','180px\x20Arial','fillText','36px\x20Arial','20px\x20Arial','addEventListener','friction','Enter','35704TZCoyX','random','splice','catch','Spacebar','Playback\x20failed:','textAlign','rgba(255,\x2016,\x20240,\x200.5)','key','sqrt','velocityX','Options','width','block','requestFullscreen','Unknown\x20menu\x20option','29710JYRpCt','score','4409984bbKCdD','DOMContentLoaded','4664166dIvhJZ','fullscreenElement','#FFFFFF','velocityY','right','Instructions','src','24px\x20Arial','height','#000000','font','length','paused','message','80px\x20Arial','playbackRate','arc','neonpink','26MqxFHd','keyup','Press\x20Space\x20to\x20Restart','918157BWOipY','Game\x20Over!','Play','637KavDUL','volume','Error\x20attempting\x20to\x20enable\x20fullscreen:','fillStyle','fill','keydown'];_0x4777=function(){return _0x345abc;};return _0x4777();}function checkCollisions(){const _0x2dad84=_0x11efb1;collidedWithBiggerEnemy&&(collisionSound[_0x2dad84(0x157)]=0x0,collisionSound['play']());}gameLoop();
-console.log("ficker.eth!");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// Audio element.
+const bgMusic = document.getElementById("bgMusic");
+
+canvas.width = 1080;
+canvas.height = 720;
+
+const player = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  radius: 3,
+  speed: 2,
+  velocityX: 0,
+  velocityY: 0,
+  friction: 0.02,
+  score: 0,
+};
+
+const enemies = [];
+const maxEnemies = 18;
+
+let isGameOver = false;
+let isGameFrozen = false;
+let showUI = true;
+let isMenuActive = true; // Add this to the beginning of your code
+let isMusicMuted = false;
+document.addEventListener('keydown', function(event) {
+  // Check if the pressed key is "M" or "m"
+  if (event.key === 'M' || event.key === 'm') {
+      toggleMusicMute();
+  }
+});
+function toggleMusicMute() {
+  if (isMusicMuted) {
+      // Unmute the music
+      bgMusic.volume = 0.5;  // Or whatever volume you had before muting
+      isMusicMuted = false;
+  } else {
+      // Mute the music
+      bgMusic.volume = 0.0;
+      isMusicMuted = true;
+  }
+}
+
+function handleKeyPress(e) {
+  if (e.key === "m" || e.key === "m") {
+    isMusicMuted = !isMusicMuted;  // Toggle the music state.
+    toggleMusic();
+  }
+  // ... (other key handling code)
+}
+function toggleMusic() {
+  if (isMusicMuted) {
+    // Mute the music. This is a generic representation. You'll have to adjust it based on how you're handling music in your game.
+    yourMusicObject.volume = 0;
+  } else {
+    // Unmute the music.
+    yourMusicObject.volume = 1;
+  }
+}
+function render() {
+  // ... (your existing render code)
+
+  if (isMusicMuted) {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "white";
+    ctx.fillText("Music: Muted", 10, canvas.height - 10);
+  }
+}
+canvas.addEventListener("keydown", handleKeyPress);
+
+
+function createEnemy() {
+  const fromLeft = Math.random() < 0.5;
+  const x = fromLeft ? -20 : canvas.width + 20;
+  const y = Math.random() * canvas.height;
+  const speedX = fromLeft ? 1 + Math.random() * 2 : -1 - Math.random() * 2;
+
+  const radius = getRandomEnemySize();
+
+  enemies.push({ x, y, radius, speedX });
+}
+
+function getRandomEnemySize() {
+  const rand = Math.random() * 100;
+
+  if (rand <= 20) {
+    return Math.floor(Math.random() * 4) + 1;
+  } else if (rand <= 55) {
+    return Math.floor(Math.random() * 51) + 5;
+  } else if (rand <= 80) {
+    return Math.floor(Math.random() * 25) + 56;
+  } else if (rand <= 95) {
+    return Math.floor(Math.random() * 11) + 81;
+  } else {
+    return Math.floor(Math.random() * 10) + 91;
+  }
+}
+
+function handleEnemies() {
+  if (isGameFrozen) return;
+
+  if (enemies.length < maxEnemies) {
+    createEnemy();
+  }
+
+  for (let i = enemies.length - 1; i >= 0; i--) {
+    const enemy = enemies[i];
+    enemy.x += enemy.speedX;
+
+    if (enemy.x < -20 || enemy.x > canvas.width + 20) {
+      enemies.splice(i, 1);
+      createEnemy();
+    }
+    if (player.radius >= 490) {
+      // Remove the enemy when the player's radius is greater than or equal to 480.
+      enemies.splice(i, 1);
+    }
+
+    const dx = enemy.x - player.x;
+    const dy = enemy.y - player.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < player.radius + enemy.radius) {
+      if (enemy.radius < player.radius) {
+        let points = 0;
+        if (enemy.radius >= 1 && enemy.radius <= 4) {
+          player.radius += 1;
+          points = 10;
+        } else if (enemy.radius >= 5 && enemy.radius <= 55) {
+          player.radius += 2;
+          points = 20;
+        } else if (enemy.radius >= 56 && enemy.radius <= 80) {
+          player.radius += 3;
+          points = 30;
+        } else if (enemy.radius >= 81 && enemy.radius <= 90) {
+          player.radius += 4;
+          points = 40;
+        } else if (enemy.radius >= 91 && enemy.radius <= 100) {
+          player.radius += 5;
+          points = 50;
+        }
+
+        player.score += points;
+        enemies.splice(i, 1);
+      } else {
+        isGameOver = true;
+        isGameFrozen = true;
+      }
+    }
+  }
+}
+
+function drawPlayer() {
+  ctx.fillStyle = "#FF10F0";
+  ctx.beginPath();
+  ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawEnemies() {
+  ctx.fillStyle = "#FFFFFF";
+  for (const enemy of enemies) {
+    ctx.beginPath();
+    ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawScore() {
+  ctx.fillStyle = "rgba(255, 16, 240, 0.5)";
+  ctx.strokeStyle = "#000000";  // Outline color
+  ctx.lineWidth = 4;
+  ctx.font = "24px Arial";
+  ctx.textAlign = "right";
+  
+  if (showUI) {
+    ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
+  }
+}
+
+
+
+
+function movePlayer() {
+  if (isGameFrozen) return;
+
+  player.velocityX *= player.friction;
+  player.velocityY *= player.friction;
+
+  if (keys["ArrowUp"] || keys["w"]) {
+    player.velocityY -= player.speed;
+  }
+  if (keys["ArrowDown"] || keys["s"]) {
+    player.velocityY += player.speed;
+  }
+  if (keys["ArrowLeft"] || keys["a"]) {
+    player.velocityX -= player.speed;
+  }
+  if (keys["ArrowRight"] || keys["d"]) {
+    player.velocityX += player.speed;
+  }
+
+  player.x += player.velocityX;
+  player.y += player.velocityY;
+
+  let maxRadiusForBorderCollision = 390;
+
+  if (player.x - player.radius < 0) {
+    player.x = player.radius;
+    player.velocityX = 0;
+  } else if (player.x + player.radius > canvas.width) {
+    player.x = canvas.width - player.radius;
+    player.velocityX = 0;
+  }
+
+  if (player.y - player.radius < 0) {
+    player.y = player.radius;
+    player.velocityY = 0;
+  } else if (player.y + player.radius > canvas.height) {
+    player.y = canvas.height - player.radius;
+    player.velocityY = 0;
+  }
+}
+
+const keys = {};
+
+window.addEventListener("keydown", (e) => {
+  keys[e.key] = true;
+});
+
+window.addEventListener("keyup", (e) => {
+  keys[e.key] = false;
+});
+
+function update() {
+  if (isMenuActive) return;  // Exit the update function if the menu is active
+
+
+  movePlayer();
+  handleEnemies();
+ 
+  // Check if player expands over the border
+ if (player.radius >= 490) {
+  isGameOver = true;
+  isGameFrozen = true;
+  }
+}
+const menuItems = ["Play", "Instructions", "Credits"];
+let selectedItemIndex = 0;
+
+
+function render() {
+  // Standard background fill.
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  if (isMenuActive) {
+    ctx.fillStyle = "#FF10F0"; 
+    ctx.font = "180px Arial"; 
+    ctx.textAlign = "center";
+    ctx.fillText("neonpink", canvas.width / 2, canvas.height / 2 - 50); // Change "Game Title" to your game's name
+    
+
+      // Drawing the menu items
+      for (let i = 0; i < menuItems.length; i++) {
+          ctx.font = "36px Arial";
+          if (i === selectedItemIndex) {
+              ctx.fillStyle = "#FFFFFF";  // Highlight color for selected item
+          } else {
+              ctx.fillStyle = "#FF10F0";  // Regular color for other items
+          }
+          ctx.fillText(menuItems[i], canvas.width / 2, canvas.height / 2 + 45 + 40 * i);
+      }
+  
+      ctx.fillStyle = "#FFFFFF";  // Reset color for "by ficker.eth"
+      ctx.font = "24px Arial";
+      ctx.fillText("by ficker.eth", canvas.width / 2 + 300, canvas.height / 2 - 20);  // Added 50 for moving below the title
+            ctx.font = "20px Arial";
+      ctx.fillText("2023", canvas.width / 2, canvas.height / 2 + 90 + 72 * menuItems.length);
+  
+
+
+  } else if (player.radius >= 490) {
+    // Fill the entire background with #FF10F0.
+    ctx.fillStyle = "#FF10F0";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#FFFFFF"; 
+    ctx.font = "80px Arial"; 
+    ctx.textAlign = "center";
+    ctx.fillText("", canvas.width / 2, canvas.height / 2 - 18);
+    ctx.font = "24px Arial";
+    ctx.fillText("", canvas.width / 2, canvas.height / 2 + 54);
+
+    
+
+    return;
+} 
+else {
+    // If the game is not over or the player hasn't expanded over the border, draw the enemies and the player.
+    drawEnemies();
+    drawPlayer();
+    drawScore();
+
+    if (isGameOver && showUI) {
+      ctx.fillStyle = "#FF10F0"; 
+      ctx.font = "80px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 18);
+      ctx.font = "24px Arial";
+      ctx.fillText("Press Space to Restart", canvas.width / 2, canvas.height / 2 + 54);
+    }
+  }
+}
+
+// In the game loop, add the following line to ensure the music continues to play:
+function gameLoop() {
+  update();
+  render();
+  requestAnimationFrame(gameLoop);
+
+  if (isMenuActive) {
+    if (!bgMusic.paused) bgMusic.pause();
+  } else if (bgMusic.paused) {
+    bgMusic.play();
+  }
+
+  
+  // Add this line to ensure the background music is playing.
+  if (bgMusic.paused) {
+    bgMusic.play();
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var audio = document.getElementById("myAudio");
+  audio.playbackRate = 0.5; // Set the playback speed to half the normal rate
+  let playPromise = bgMusic.play();
+  if (playPromise !== undefined) {
+      playPromise.then(_ => {
+          // Audio playback started
+      })
+      .catch(error => {
+          console.error("Playback failed:", error.message);
+      });
+  }
+}
+);
+let keysPressed = {};
+
+// Listen for keydown events
+document.addEventListener('keydown', function(event) {
+    keysPressed[event.key] = true;
+    checkForArrowDownAndS();
+});
+
+// Listen for keyup events
+document.addEventListener('keyup', function(event) {
+    delete keysPressed[event.key];
+});
+
+function checkForArrowDownAndS() {
+    if (keysPressed['ArrowDown'] && keysPressed['s']) {
+        displayPNG();
+    }
+}
+
+function displayPNG() {
+    // Assuming you have an <img> element in your HTML with id 'myImage'
+    let imgElement = document.getElementById('myImage');
+    
+    // Set the source of the image element to your PNG file's path
+    imgElement.src = '1409.png';
+    
+    // Make the image visible
+    imgElement.style.display = 'block';
+}
+
+
+document.addEventListener("keydown", (e) => {
+  if (isMenuActive) {
+    if (e.key === "ArrowUp") {
+      selectedItemIndex--;
+      if (selectedItemIndex < 0) {
+        selectedItemIndex = menuItems.length - 1; // wrap around to the last item
+      }
+    } else if (e.key === "ArrowDown") {
+      selectedItemIndex++;
+      if (selectedItemIndex >= menuItems.length) {
+        selectedItemIndex = 0; // wrap around to the first item
+      }
+    } else if (e.key === "Enter" || e.key === "Space") {
+      // Logic for selecting the highlighted option
+      // For example:
+      switch (menuItems[selectedItemIndex]) {
+        case "Play":
+          isMenuActive = false;
+          break;
+        case "Options":
+          // code to open options
+          break;
+        case "Credits":
+          // code to show credits
+          break;
+        default:
+          console.error("Unknown menu option");
+      }
+    }
+  }  if (isGameOver && (e.key === "Backspace")) {
+    isMenuActive = true;  // Return to the menu when Enter is pressed during Game Over
+    return;
+  }
+}
+)
+// Inside your event listener for restarting the game, you can add a line to restart the music:
+document.addEventListener("keydown", (e) => {
+  if (isGameOver && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
+    restartGame();
+    
+  if ((isGameOver || isVictory) && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
+      playAgain();
+    }  
+    // Add this line to restart the background music.
+    bgMusic.currentTime = 0;
+    bgMusic.volume = 0.5;  // Set volume to 50%
+    bgMusic.playbackRate = 0.5;
+    let playPromise = bgMusic.play();
+
+if (playPromise !== undefined) {
+    playPromise.then(_ => {
+        // Audio playback started
+    })
+    .catch(error => {
+        console.error("Playback failed:", error.message);
+    });
+}
+
+  }
+
+  if (e.key === "Tab") {
+    showUI = !showUI;
+  }
+  
+  if (e.key === "f") {
+    toggleFullscreen();
+  }
+});
+
+function restartGame() {
+  player.x = canvas.width / 2;
+  player.y = canvas.height / 2;
+  player.radius = 3;
+  player.score = 0;
+  enemies.length = 0;
+  isGameOver = false;
+  isGameFrozen = false;
+}
+
+function toggleFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else {
+    canvas.requestFullscreen().catch((err) => {
+      console.error("Error attempting to enable fullscreen:", err.message);
+    });
+  }
+}
+function checkCollisions() {
+  // ... any other collision checks ...
+
+  if (collidedWithBiggerEnemy) {
+      collisionSound.currentTime = 0; // reset sound to start
+      collisionSound.play();
+  }
+}
+function checkCollisions() {
+  // ... any other collision checks ...
+
+  if (collidedWithBiggerEnemy) {
+      collisionSound.currentTime = 0; // reset sound to start
+      collisionSound.play();
+  }
+}
+gameLoop();
