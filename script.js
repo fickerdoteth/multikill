@@ -347,7 +347,7 @@ document.addEventListener("keydown", (e) => {
     // Add this line to restart the background music.
     bgMusic.currentTime = 0;
     bgMusic.volume = 0.5;  // Set volume to 50%
-    bgMusic.playbackrate =0.6
+    
     let playPromise = bgMusic.play();
 
 if (playPromise !== undefined) {
