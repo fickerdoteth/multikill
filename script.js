@@ -25,6 +25,35 @@ let isGameOver = false;
 let isGameFrozen = false;
 let showUI = true;
 let isMenuActive = true; // Add this to the beginning of your code
+let isMusicMuted = false;
+
+function handleKeyPress(e) {
+  if (e.key === "m" || e.key === "m") {
+    isMusicMuted = !isMusicMuted;  // Toggle the music state.
+    toggleMusic();
+  }
+  // ... (other key handling code)
+}
+function toggleMusic() {
+  if (isMusicMuted) {
+    // Mute the music. This is a generic representation. You'll have to adjust it based on how you're handling music in your game.
+    yourMusicObject.volume = 0;
+  } else {
+    // Unmute the music.
+    yourMusicObject.volume = 1;
+  }
+}
+function render() {
+  // ... (your existing render code)
+
+  if (isMusicMuted) {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "white";
+    ctx.fillText("Music: Muted", 10, canvas.height - 10);
+  }
+}
+canvas.addEventListener("keydown", handleKeyPress);
+
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -82,19 +111,19 @@ function handleEnemies() {
         let points = 0;
         if (enemy.radius >= 1 && enemy.radius <= 4) {
           player.radius += 1;
-          points = 100;
+          points = 10;
         } else if (enemy.radius >= 5 && enemy.radius <= 55) {
           player.radius += 2;
-          points = 200;
+          points = 20;
         } else if (enemy.radius >= 56 && enemy.radius <= 80) {
           player.radius += 3;
-          points = 300;
+          points = 30;
         } else if (enemy.radius >= 81 && enemy.radius <= 90) {
           player.radius += 4;
-          points = 400;
+          points = 40;
         } else if (enemy.radius >= 91 && enemy.radius <= 100) {
           player.radius += 5;
-          points = 500;
+          points = 50;
         }
 
         player.score += points;
@@ -347,7 +376,7 @@ document.addEventListener("keydown", (e) => {
     // Add this line to restart the background music.
     bgMusic.currentTime = 0;
     bgMusic.volume = 0.5;  // Set volume to 50%
-    
+    bgMusic.playbackRate = 0.5;
     let playPromise = bgMusic.play();
 
 if (playPromise !== undefined) {
