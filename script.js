@@ -1,6 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+// Audio element.
+const bgMusic = document.getElementById("bgMusic");
+
 canvas.width = 1080;
 canvas.height = 720;
 
@@ -9,8 +12,8 @@ const player = {
   y: canvas.height / 2,
   radius: 3,
   speed: 2,
-  velocityX: 1.5,
-  velocityY: 1.5,
+  velocityX: 0,
+  velocityY: 0,
   friction: 0.02,
   score: 0,
 };
@@ -63,6 +66,10 @@ function handleEnemies() {
     if (enemy.x < -20 || enemy.x > canvas.width + 20) {
       enemies.splice(i, 1);
       createEnemy();
+    }
+    if (player.radius >= 490) {
+      // Remove the enemy when the player's radius is greater than or equal to 480.
+      enemies.splice(i, 1);
     }
 
     const dx = enemy.x - player.x;
@@ -117,8 +124,11 @@ function drawEnemies() {
 
 function drawScore() {
   ctx.fillStyle = "rgba(255, 16, 240, 0.5)";
+  ctx.strokeStyle = "#000000";  // Outline color
+  ctx.lineWidth = 4;
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
+  
   if (showUI) {
     ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
   }
@@ -145,6 +155,8 @@ function movePlayer() {
 
   player.x += player.velocityX;
   player.y += player.velocityY;
+
+  let maxRadiusForBorderCollision = 390;
 
   if (player.x - player.radius < 0) {
     player.x = player.radius;
@@ -176,35 +188,75 @@ window.addEventListener("keyup", (e) => {
 function update() {
   movePlayer();
   handleEnemies();
-}
-
-function render() {
-  ctx.fillStyle = "#000000";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  drawEnemies();
-  drawPlayer();
-  drawScore();
-
-  if (isGameOver && showUI) {
-    ctx.fillStyle = "#FF10F0";
-    ctx.font = "80px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 18);
-    ctx.font = "24px Arial";
-    ctx.fillText("Press Space to Restart", canvas.width / 2, canvas.height / 2 + 54);
+ 
+  // Check if player expands over the border
+ if (player.radius >= 490) {
+  isGameOver = true;
+  isGameFrozen = true;
   }
 }
 
+
+function render() {
+  // Standard background fill.
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  if (player.radius >= 490) {
+    // Fill the entire background with #FF10F0.
+    ctx.fillStyle = "#FF10F0";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#FFFFFF"; 
+    ctx.font = "80px Arial"; 
+    ctx.textAlign = "center";
+    ctx.fillText("", canvas.width / 2, canvas.height / 2 - 18);
+    ctx.font = "24px Arial";
+    ctx.fillText("", canvas.width / 2, canvas.height / 2 + 54);
+
+    
+
+    return;
+} 
+else {
+    // If the game is not over or the player hasn't expanded over the border, draw the enemies and the player.
+    drawEnemies();
+    drawPlayer();
+    drawScore();
+
+    if (isGameOver && showUI) {
+      ctx.fillStyle = "#FF10F0"; 
+      ctx.font = "80px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 18);
+      ctx.font = "24px Arial";
+      ctx.fillText("Press Space to Restart", canvas.width / 2, canvas.height / 2 + 54);
+    }
+  }
+}
+
+// In the game loop, add the following line to ensure the music continues to play:
 function gameLoop() {
   update();
   render();
   requestAnimationFrame(gameLoop);
+  
+  // Add this line to ensure the background music is playing.
+  if (bgMusic.paused) {
+    bgMusic.play();
+  }
 }
 
+// Inside your event listener for restarting the game, you can add a line to restart the music:
 document.addEventListener("keydown", (e) => {
   if (isGameOver && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
     restartGame();
+    
+  if ((isGameOver || isVictory) && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
+      playAgain();
+    }  
+    // Add this line to restart the background music.
+    bgMusic.currentTime = 0;
   }
 
   if (e.key === "Tab") {
