@@ -32,11 +32,11 @@ document.addEventListener('keydown', function(event) {
 });
 function toggleMusicMute() {
   if (isMusicMuted) {
-      // Unmute the music
-      bgMusic.volume = 1;  // Or whatever volume you had before muting
+    
+      bgMusic.volume = 1;  
       isMusicMuted = false;
   } else {
-      // Mute the music
+    
       bgMusic.volume = 0.0;
       isMusicMuted = true;
   }
@@ -44,7 +44,7 @@ function toggleMusicMute() {
 
 function handleKeyPress(e) {
   if (e.key === "m" || e.key === "m") {
-    isMusicMuted = !isMusicMuted;  // Toggle the music state.
+    isMusicMuted = !isMusicMuted;  
     toggleMusic();
   }
 
@@ -54,7 +54,7 @@ function toggleMusic() {
   
     yourMusicObject.volume = 0;
   } else {
-    // Unmute the music.
+    
     yourMusicObject.volume = 1;
   }
 }
