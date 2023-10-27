@@ -24,21 +24,18 @@ const maxEnemies = 18;
 let isGameOver = false;
 let isGameFrozen = false;
 let showUI = true;
-let isMenuActive = true; // Add this to the beginning of your code
+let isMenuActive = true; 
 let isMusicMuted = false;
 document.addEventListener('keydown', function(event) {
-  // Check if the pressed key is "M" or "m"
   if (event.key === 'M' || event.key === 'm') {
       toggleMusicMute();
   }
 });
 function toggleMusicMute() {
   if (isMusicMuted) {
-      // Unmute the music
-      bgMusic.volume = 0.5;  // Or whatever volume you had before muting
+      bgMusic.volume = 0.5;  
       isMusicMuted = false;
   } else {
-      // Mute the music
       bgMusic.volume = 0.0;
       isMusicMuted = true;
   }
@@ -46,22 +43,18 @@ function toggleMusicMute() {
 
 function handleKeyPress(e) {
   if (e.key === "m" || e.key === "m") {
-    isMusicMuted = !isMusicMuted;  // Toggle the music state.
+    isMusicMuted = !isMusicMuted;  
     toggleMusic();
   }
-  // ... (other key handling code)
 }
 function toggleMusic() {
   if (isMusicMuted) {
-    // Mute the music. This is a generic representation. You'll have to adjust it based on how you're handling music in your game.
     yourMusicObject.volume = 0;
   } else {
-    // Unmute the music.
     yourMusicObject.volume = 1;
   }
 }
 function render() {
-  // ... (your existing render code)
 
   if (isMusicMuted) {
     ctx.font = "16px Arial";
@@ -115,7 +108,6 @@ function handleEnemies() {
       createEnemy();
     }
     if (player.radius >= 490) {
-      // Remove the enemy when the player's radius is greater than or equal to 480.
       enemies.splice(i, 1);
     }
 
@@ -159,7 +151,6 @@ function drawPlayer() {
   ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
   ctx.fill();
 }
-
 function drawEnemies() {
   ctx.fillStyle = "#FFFFFF";
   for (const enemy of enemies) {
@@ -168,10 +159,9 @@ function drawEnemies() {
     ctx.fill();
   }
 }
-
 function drawScore() {
   ctx.fillStyle = "rgba(255, 16, 240, 0.5)";
-  ctx.strokeStyle = "#000000";  // Outline color
+  ctx.strokeStyle = "#000000";  
   ctx.lineWidth = 4;
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
@@ -180,9 +170,6 @@ function drawScore() {
     ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
   }
 }
-
-
-
 
 function movePlayer() {
   if (isGameFrozen) return;
@@ -236,13 +223,11 @@ window.addEventListener("keyup", (e) => {
 });
 
 function update() {
-  if (isMenuActive) return;  // Exit the update function if the menu is active
-
+  if (isMenuActive) return;  
 
   movePlayer();
   handleEnemies();
  
-  // Check if player expands over the border
  if (player.radius >= 490) {
   isGameOver = true;
   isGameFrozen = true;
@@ -253,7 +238,6 @@ let selectedItemIndex = 0;
 
 
 function render() {
-  // Standard background fill.
   ctx.fillStyle = "#000000";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -261,30 +245,27 @@ function render() {
     ctx.fillStyle = "#FF10F0"; 
     ctx.font = "180px Arial"; 
     ctx.textAlign = "center";
-    ctx.fillText("neonpink", canvas.width / 2, canvas.height / 2 - 50); // Change "Game Title" to your game's name
+    ctx.fillText("neonpink", canvas.width / 2, canvas.height / 2 - 50); 
     
-
-      // Drawing the menu items
       for (let i = 0; i < menuItems.length; i++) {
           ctx.font = "36px Arial";
           if (i === selectedItemIndex) {
-              ctx.fillStyle = "#FFFFFF";  // Highlight color for selected item
+              ctx.fillStyle = "#FFFFFF";  
           } else {
-              ctx.fillStyle = "#FF10F0";  // Regular color for other items
+              ctx.fillStyle = "#FF10F0";  
           }
           ctx.fillText(menuItems[i], canvas.width / 2, canvas.height / 2 + 45 + 40 * i);
       }
   
-      ctx.fillStyle = "#FFFFFF";  // Reset color for "by ficker.eth"
+      ctx.fillStyle = "#FFFFFF"; 
       ctx.font = "24px Arial";
-      ctx.fillText("by ficker.eth", canvas.width / 2 + 300, canvas.height / 2 - 20);  // Added 50 for moving below the title
+      ctx.fillText("by ficker.eth", canvas.width / 2 + 300, canvas.height / 2 - 20);  
             ctx.font = "20px Arial";
       ctx.fillText("2023", canvas.width / 2, canvas.height / 2 + 90 + 72 * menuItems.length);
   
 
 
   } else if (player.radius >= 490) {
-    // Fill the entire background with #FF10F0.
     ctx.fillStyle = "#FF10F0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -295,12 +276,9 @@ function render() {
     ctx.font = "24px Arial";
     ctx.fillText("", canvas.width / 2, canvas.height / 2 + 54);
 
-    
-
     return;
 } 
 else {
-    // If the game is not over or the player hasn't expanded over the border, draw the enemies and the player.
     drawEnemies();
     drawPlayer();
     drawScore();
@@ -315,8 +293,6 @@ else {
     }
   }
 }
-
-// In the game loop, add the following line to ensure the music continues to play:
 function gameLoop() {
   update();
   render();
@@ -329,18 +305,16 @@ function gameLoop() {
   }
 
   
-  // Add this line to ensure the background music is playing.
   if (bgMusic.paused) {
     bgMusic.play();
   }
 }
 document.addEventListener('DOMContentLoaded', function() {
   var audio = document.getElementById("myAudio");
-  audio.playbackRate = 0.5; // Set the playback speed to half the normal rate
+  audio.playbackRate = 0.5; 
   let playPromise = bgMusic.play();
   if (playPromise !== undefined) {
       playPromise.then(_ => {
-          // Audio playback started
       })
       .catch(error => {
           console.error("Playback failed:", error.message);
@@ -350,33 +324,17 @@ document.addEventListener('DOMContentLoaded', function() {
 );
 let keysPressed = {};
 
-// Listen for keydown events
 document.addEventListener('keydown', function(event) {
     keysPressed[event.key] = true;
     checkForArrowDownAndS();
 });
 
-// Listen for keyup events
 document.addEventListener('keyup', function(event) {
     delete keysPressed[event.key];
 });
 
-function checkForArrowDownAndS() {
-    if (keysPressed['ArrowDown'] && keysPressed['s']) {
-        displayPNG();
-    }
-}
 
-function displayPNG() {
-    // Assuming you have an <img> element in your HTML with id 'myImage'
-    let imgElement = document.getElementById('myImage');
-    
-    // Set the source of the image element to your PNG file's path
-    imgElement.src = '1409.png';
-    
-    // Make the image visible
-    imgElement.style.display = 'block';
-}
+
 
 
 document.addEventListener("keydown", (e) => {
@@ -391,30 +349,25 @@ document.addEventListener("keydown", (e) => {
       if (selectedItemIndex >= menuItems.length) {
         selectedItemIndex = 0; // wrap around to the first item
       }
-    } else if (e.key === "Enter" || e.key === "Space") {
-      // Logic for selecting the highlighted option
-      // For example:
+    } else if (e.key === "Enter" || e.key === " ") {
       switch (menuItems[selectedItemIndex]) {
         case "Play":
           isMenuActive = false;
           break;
         case "Options":
-          // code to open options
           break;
         case "Credits":
-          // code to show credits
           break;
         default:
           console.error("Unknown menu option");
       }
     }
   }  if (isGameOver && (e.key === "Backspace")) {
-    isMenuActive = true;  // Return to the menu when Enter is pressed during Game Over
+    isMenuActive = true; 
     return;
   }
 }
 )
-// Inside your event listener for restarting the game, you can add a line to restart the music:
 document.addEventListener("keydown", (e) => {
   if (isGameOver && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
     restartGame();
@@ -422,7 +375,7 @@ document.addEventListener("keydown", (e) => {
   if ((isGameOver || isVictory) && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
       playAgain();
     }  
-    // Add this line to restart the background music.
+
     bgMusic.currentTime = 0;
     bgMusic.volume = 0.5;  // Set volume to 50%
     bgMusic.playbackRate = 0.5;
@@ -430,7 +383,7 @@ document.addEventListener("keydown", (e) => {
 
 if (playPromise !== undefined) {
     playPromise.then(_ => {
-        // Audio playback started
+    
     })
     .catch(error => {
         console.error("Playback failed:", error.message);
@@ -447,7 +400,6 @@ if (playPromise !== undefined) {
     toggleFullscreen();
   }
 });
-
 function restartGame() {
   player.x = canvas.width / 2;
   player.y = canvas.height / 2;
@@ -457,7 +409,6 @@ function restartGame() {
   isGameOver = false;
   isGameFrozen = false;
 }
-
 function toggleFullscreen() {
   if (document.fullscreenElement) {
     document.exitFullscreen();
@@ -468,18 +419,17 @@ function toggleFullscreen() {
   }
 }
 function checkCollisions() {
-  // ... any other collision checks ...
+
 
   if (collidedWithBiggerEnemy) {
-      collisionSound.currentTime = 0; // reset sound to start
+      collisionSound.currentTime = 0; 
       collisionSound.play();
   }
 }
 function checkCollisions() {
-  // ... any other collision checks ...
 
   if (collidedWithBiggerEnemy) {
-      collisionSound.currentTime = 0; // reset sound to start
+      collisionSound.currentTime = 0; 
       collisionSound.play();
   }
 }
