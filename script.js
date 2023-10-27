@@ -1,7 +1,5 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-
-// Audio element.
 const bgMusic = document.getElementById("bgMusic");
 
 canvas.width = 1080;
@@ -17,7 +15,6 @@ const player = {
   friction: 0.02,
   score: 0,
 };
-
 const enemies = [];
 const maxEnemies = 18;
 
@@ -27,7 +24,7 @@ let showUI = true;
 let isMenuActive = true; // Add this to the beginning of your code
 let isMusicMuted = false;
 document.addEventListener('keydown', function(event) {
-  // Check if the pressed key is "M" or "m"
+
   if (event.key === 'M' || event.key === 'm') {
       toggleMusicMute();
   }
@@ -35,7 +32,7 @@ document.addEventListener('keydown', function(event) {
 function toggleMusicMute() {
   if (isMusicMuted) {
       // Unmute the music
-      bgMusic.volume = 1;  // Or whatever volume you had before muting
+      bgMusic.volume = 0.5;  // Or whatever volume you had before muting
       isMusicMuted = false;
   } else {
       // Mute the music
@@ -43,25 +40,23 @@ function toggleMusicMute() {
       isMusicMuted = true;
   }
 }
-
 function handleKeyPress(e) {
   if (e.key === "m" || e.key === "m") {
-    isMusicMuted = !isMusicMuted;  // Toggle the music state.
+    isMusicMuted = !isMusicMuted; 
     toggleMusic();
   }
-  // ... (other key handling code)
+
 }
 function toggleMusic() {
   if (isMusicMuted) {
-    // Mute the music. This is a generic representation. You'll have to adjust it based on how you're handling music in your game.
+
     yourMusicObject.volume = 0;
   } else {
-    // Unmute the music.
+ 
     yourMusicObject.volume = 1;
   }
 }
 function render() {
-  // ... (your existing render code)
 
   if (isMusicMuted) {
     ctx.font = "16px Arial";
@@ -70,7 +65,6 @@ function render() {
   }
 }
 canvas.addEventListener("keydown", handleKeyPress);
-
 
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
@@ -82,7 +76,6 @@ function createEnemy() {
 
   enemies.push({ x, y, radius, speedX });
 }
-
 function getRandomEnemySize() {
   const rand = Math.random() * 100;
 
@@ -98,7 +91,6 @@ function getRandomEnemySize() {
     return Math.floor(Math.random() * 10) + 91;
   }
 }
-
 function handleEnemies() {
   if (isGameFrozen) return;
 
@@ -152,7 +144,6 @@ function handleEnemies() {
     }
   }
 }
-
 function drawPlayer() {
   ctx.fillStyle = "#FF10F0";
   ctx.beginPath();
@@ -168,22 +159,17 @@ function drawEnemies() {
     ctx.fill();
   }
 }
-
 function drawScore() {
   ctx.fillStyle = "rgba(255, 16, 240, 0.5)";
   ctx.strokeStyle = "#000000";  // Outline color
   ctx.lineWidth = 4;
   ctx.font = "24px Arial";
   ctx.textAlign = "right";
-  
+
   if (showUI) {
     ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
   }
 }
-
-
-
-
 function movePlayer() {
   if (isGameFrozen) return;
 
@@ -202,7 +188,6 @@ function movePlayer() {
   if (keys["ArrowRight"] || keys["d"]) {
     player.velocityX += player.speed;
   }
-
   player.x += player.velocityX;
   player.y += player.velocityY;
 
@@ -215,7 +200,6 @@ function movePlayer() {
     player.x = canvas.width - player.radius;
     player.velocityX = 0;
   }
-
   if (player.y - player.radius < 0) {
     player.y = player.radius;
     player.velocityY = 0;
@@ -224,7 +208,6 @@ function movePlayer() {
     player.velocityY = 0;
   }
 }
-
 const keys = {};
 
 window.addEventListener("keydown", (e) => {
@@ -238,11 +221,9 @@ window.addEventListener("keyup", (e) => {
 function update() {
   if (isMenuActive) return;  // Exit the update function if the menu is active
 
-
   movePlayer();
   handleEnemies();
- 
-  // Check if player expands over the border
+
  if (player.radius >= 490) {
   isGameOver = true;
   isGameFrozen = true;
@@ -250,7 +231,6 @@ function update() {
 }
 const menuItems = ["Play", "Instructions", "Credits"];
 let selectedItemIndex = 0;
-
 
 function render() {
   // Standard background fill.
@@ -262,9 +242,8 @@ function render() {
     ctx.font = "180px Arial"; 
     ctx.textAlign = "center";
     ctx.fillText("neonpink", canvas.width / 2, canvas.height / 2 - 50); // Change "Game Title" to your game's name
-    
 
-      // Drawing the menu items
+  
       for (let i = 0; i < menuItems.length; i++) {
           ctx.font = "36px Arial";
           if (i === selectedItemIndex) {
@@ -274,14 +253,12 @@ function render() {
           }
           ctx.fillText(menuItems[i], canvas.width / 2, canvas.height / 2 + 45 + 40 * i);
       }
-  
+
       ctx.fillStyle = "#FFFFFF";  // Reset color for "by ficker.eth"
       ctx.font = "24px Arial";
       ctx.fillText("by ficker.eth", canvas.width / 2 + 300, canvas.height / 2 - 20);  // Added 50 for moving below the title
             ctx.font = "20px Arial";
       ctx.fillText("2023", canvas.width / 2, canvas.height / 2 + 90 + 72 * menuItems.length);
-  
-
 
   } else if (player.radius >= 490) {
     // Fill the entire background with #FF10F0.
@@ -295,12 +272,9 @@ function render() {
     ctx.font = "24px Arial";
     ctx.fillText("", canvas.width / 2, canvas.height / 2 + 54);
 
-    
-
     return;
 } 
 else {
-    // If the game is not over or the player hasn't expanded over the border, draw the enemies and the player.
     drawEnemies();
     drawPlayer();
     drawScore();
@@ -316,7 +290,6 @@ else {
   }
 }
 
-// In the game loop, add the following line to ensure the music continues to play:
 function gameLoop() {
   update();
   render();
@@ -328,7 +301,7 @@ function gameLoop() {
     bgMusic.play();
   }
 
-  
+
   // Add this line to ensure the background music is playing.
   if (bgMusic.paused) {
     bgMusic.play();
@@ -370,14 +343,13 @@ function checkForArrowDownAndS() {
 function displayPNG() {
     // Assuming you have an <img> element in your HTML with id 'myImage'
     let imgElement = document.getElementById('myImage');
-    
+
     // Set the source of the image element to your PNG file's path
     imgElement.src = '1409.png';
-    
+
     // Make the image visible
     imgElement.style.display = 'block';
 }
-
 
 document.addEventListener("keydown", (e) => {
   if (isMenuActive) {
@@ -414,15 +386,15 @@ document.addEventListener("keydown", (e) => {
   }
 }
 )
-// Inside your event listener for restarting the game, you can add a line to restart the music:
+
 document.addEventListener("keydown", (e) => {
   if (isGameOver && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
     restartGame();
-    
+
   if ((isGameOver || isVictory) && (e.key === " " || e.key === "Spacebar" || e.key === "r" || e.key === "Enter")) {
       playAgain();
     }  
-    // Add this line to restart the background music.
+ 
     bgMusic.currentTime = 0;
     bgMusic.volume = 0.5;  // Set volume to 50%
     bgMusic.playbackRate = 0.5;
@@ -442,7 +414,7 @@ if (playPromise !== undefined) {
   if (e.key === "Tab") {
     showUI = !showUI;
   }
-  
+
   if (e.key === "f") {
     toggleFullscreen();
   }
@@ -468,7 +440,6 @@ function toggleFullscreen() {
   }
 }
 function checkCollisions() {
-  // ... any other collision checks ...
 
   if (collidedWithBiggerEnemy) {
       collisionSound.currentTime = 0; // reset sound to start
@@ -476,7 +447,6 @@ function checkCollisions() {
   }
 }
 function checkCollisions() {
-  // ... any other collision checks ...
 
   if (collidedWithBiggerEnemy) {
       collisionSound.currentTime = 0; // reset sound to start
