@@ -1,7 +1,5 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-
-// Audio element.
 const bgMusic = document.getElementById("bgMusic");
 
 canvas.width = 1080;
