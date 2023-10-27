@@ -15,7 +15,6 @@ const player = {
   friction: 0.02,
   score: 0,
 };
-
 const enemies = [];
 const maxEnemies = 18;
 
@@ -38,7 +37,6 @@ function toggleMusicMute() {
       isMusicMuted = true;
   }
 }
-
 function handleKeyPress(e) {
   if (e.key === "m" || e.key === "m") {
     isMusicMuted = !isMusicMuted;  
@@ -62,7 +60,6 @@ function render() {
 }
 canvas.addEventListener("keydown", handleKeyPress);
 
-
 function createEnemy() {
   const fromLeft = Math.random() < 0.5;
   const x = fromLeft ? -20 : canvas.width + 20;
@@ -73,7 +70,6 @@ function createEnemy() {
 
   enemies.push({ x, y, radius, speedX });
 }
-
 function getRandomEnemySize() {
   const rand = Math.random() * 100;
 
@@ -89,14 +85,12 @@ function getRandomEnemySize() {
     return Math.floor(Math.random() * 10) + 91;
   }
 }
-
 function handleEnemies() {
   if (isGameFrozen) return;
 
   if (enemies.length < maxEnemies) {
     createEnemy();
   }
-
   for (let i = enemies.length - 1; i >= 0; i--) {
     const enemy = enemies[i];
     enemy.x += enemy.speedX;
@@ -108,7 +102,6 @@ function handleEnemies() {
     if (player.radius >= 490) {
       enemies.splice(i, 1);
     }
-
     const dx = enemy.x - player.x;
     const dy = enemy.y - player.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
@@ -142,7 +135,6 @@ function handleEnemies() {
     }
   }
 }
-
 function drawPlayer() {
   ctx.fillStyle = "#FF10F0";
   ctx.beginPath();
@@ -168,7 +160,6 @@ function drawScore() {
     ctx.fillText("Score: " + player.score, canvas.width - 20, canvas.height - 20);
   }
 }
-
 function movePlayer() {
   if (isGameFrozen) return;
 
@@ -187,7 +178,6 @@ function movePlayer() {
   if (keys["ArrowRight"] || keys["d"]) {
     player.velocityX += player.speed;
   }
-
   player.x += player.velocityX;
   player.y += player.velocityY;
 
@@ -200,7 +190,6 @@ function movePlayer() {
     player.x = canvas.width - player.radius;
     player.velocityX = 0;
   }
-
   if (player.y - player.radius < 0) {
     player.y = player.radius;
     player.velocityY = 0;
@@ -209,7 +198,6 @@ function movePlayer() {
     player.velocityY = 0;
   }
 }
-
 const keys = {};
 
 window.addEventListener("keydown", (e) => {
@@ -233,7 +221,6 @@ function update() {
 }
 const menuItems = ["Play", "Instructions", "Credits"];
 let selectedItemIndex = 0;
-
 
 function render() {
   ctx.fillStyle = "#000000";
@@ -261,7 +248,6 @@ function render() {
             ctx.font = "20px Arial";
       ctx.fillText("2023", canvas.width / 2, canvas.height / 2 + 90 + 72 * menuItems.length);
   
-
 
   } else if (player.radius >= 490) {
     ctx.fillStyle = "#FF10F0";
@@ -302,7 +288,6 @@ function gameLoop() {
     bgMusic.play();
   }
 
-  
   if (bgMusic.paused) {
     bgMusic.play();
   }
@@ -331,21 +316,19 @@ document.addEventListener('keyup', function(event) {
     delete keysPressed[event.key];
 });
 
-
-
-
+let music = new Audio('neon.mp3');
 
 document.addEventListener("keydown", (e) => {
   if (isMenuActive) {
     if (e.key === "ArrowUp") {
       selectedItemIndex--;
       if (selectedItemIndex < 0) {
-        selectedItemIndex = menuItems.length - 1; // wrap around to the last item
+        selectedItemIndex = menuItems.length - 1; 
       }
     } else if (e.key === "ArrowDown") {
       selectedItemIndex++;
       if (selectedItemIndex >= menuItems.length) {
-        selectedItemIndex = 0; // wrap around to the first item
+        selectedItemIndex = 0; 
       }
     } else if (e.key === "Enter" || e.key === " ") {
       switch (menuItems[selectedItemIndex]) {
@@ -380,20 +363,16 @@ document.addEventListener("keydown", (e) => {
     let playPromise = bgMusic.play();
 
 if (playPromise !== undefined) {
-    playPromise.then(_ => {
-    
+    playPromise.then(_ => {   
     })
     .catch(error => {
         console.error("Playback failed:", error.message);
     });
 }
-
   }
-
   if (e.key === "Tab") {
     showUI = !showUI;
-  }
-  
+  } 
   if (e.key === "f") {
     toggleFullscreen();
   }
@@ -417,7 +396,6 @@ function toggleFullscreen() {
   }
 }
 function checkCollisions() {
-
 
   if (collidedWithBiggerEnemy) {
       collisionSound.currentTime = 0; 
