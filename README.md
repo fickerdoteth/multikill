@@ -15,6 +15,7 @@ Welcome to NEONPINK! This simple yet addictive game will challenge your reflexes
 - Press the Spacebar or Enter key to restart the game after it's over.
 - Press the Tab key to toggle the in-game UI (score display).
 - Press the F key to toggle fullscreen mode.
+- Press the M key to mute the music.
 
 ## Features
 - The game includes a background music track (make sure your audio is on).
