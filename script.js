@@ -10,7 +10,7 @@ canvas.height = 720;
 const player = {
   x: canvas.width / 2,
   y: canvas.height / 2,
-  radius: 10,
+  radius: 3,
   speed: 2,
   velocityX: 0,
   velocityY: 0,
@@ -424,8 +424,8 @@ document.addEventListener("keydown", (e) => {
     }  
     // Add this line to restart the background music.
     bgMusic.currentTime = 0;
-    bgMusic.volume = 1;  // Set volume to 50%
-    bgMusic.playbackRate = 1;
+    bgMusic.volume = 0.5;  // Set volume to 50%
+    bgMusic.playbackRate = 0.5;
     let playPromise = bgMusic.play();
 
 if (playPromise !== undefined) {
