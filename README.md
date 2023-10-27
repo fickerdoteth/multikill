@@ -1,4 +1,4 @@
-## NEONPINK.eth
+## NEONPINK
 Welcome to NEONPINK! This simple yet addictive game will challenge your reflexes as you navigate your way through a sea of circles, grow bigger, and try to score as high as possible.
 
 **Note: NEONPINK offers a true web3 experience through the use of IPFS and an ENS name.**
